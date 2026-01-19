@@ -9,7 +9,7 @@ export default function App() {
     <View style={styles.container}>
       <Slider
         value={value}
-        onValueChange={(val) => {
+        onValueChange={(val: number) => {
           console.log('Slider value:', val);
         }}
         maxValue={100}

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-animated-slider": ["./src/index"]
+      "@jellify-music/react-native-reanimated-slider": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
