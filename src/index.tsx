@@ -29,7 +29,6 @@ export default function Slider({
   const isInteractingRef = useRef(false);
   const sliderWidthRef = useRef(0);
   const sliderThumbWidthRef = useRef(0);
-  const sliderXOffsetRef = useRef(0);
 
   const handleValueChange = async (position: number) => {
     const clampedValue = Math.max(0, Math.min(position, maxValue));
@@ -51,8 +50,7 @@ export default function Slider({
     .onStart((event) => {
       isInteractingRef.current = true;
 
-      const relativeX = event.absoluteX - sliderXOffsetRef.current;
-      const clampedX = Math.max(0, Math.min(relativeX, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
       const position = interpolate(
         clampedX,
         [0, sliderWidthRef.current],
@@ -63,11 +61,7 @@ export default function Slider({
     })
     .onUpdate((event) => {
       if (isInteractingRef.current) {
-        const relativeX = event.absoluteX - sliderXOffsetRef.current;
-        const clampedX = Math.max(
-          0,
-          Math.min(relativeX, sliderWidthRef.current)
-        );
+        const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
         const position = interpolate(
           clampedX,
           [0, sliderWidthRef.current],
@@ -78,8 +72,7 @@ export default function Slider({
       }
     })
     .onEnd(async (event) => {
-      const relativeX = event.absoluteX - sliderXOffsetRef.current;
-      const clampedX = Math.max(0, Math.min(relativeX, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
       const position = interpolate(
         clampedX,
         [0, sliderWidthRef.current],
@@ -98,8 +91,7 @@ export default function Slider({
     .onBegin((event) => {
       isInteractingRef.current = true;
 
-      const relativeX = event.absoluteX - sliderXOffsetRef.current;
-      const clampedX = Math.max(0, Math.min(relativeX, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
 
       const position = interpolate(
         clampedX,
@@ -113,8 +105,7 @@ export default function Slider({
     .onFinalize(async (event, success) => {
       if (!success) return;
 
-      const relativeX = event.absoluteX - sliderXOffsetRef.current;
-      const clampedX = Math.max(0, Math.min(relativeX, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
       const position = interpolate(
         clampedX,
         [0, sliderWidthRef.current],
@@ -156,10 +147,9 @@ export default function Slider({
   }));
 
   const measureLayout = (event: LayoutChangeEvent) => {
-    const { width, x } = event.nativeEvent.layout;
+    const { width } = event.nativeEvent.layout;
     sliderWidthRef.current = width;
-
-    sliderXOffsetRef.current = x;
+    sliderThumbWidthRef.current = thumbWidth;
   };
 
   return (
