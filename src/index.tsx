@@ -13,7 +13,7 @@ interface SliderProps {
   onValueChange: (value: number) => void;
   maxValue: number;
   value: SharedValue<number>;
-  height: number;
+  thumbWidth: number;
   backgroundColor: string;
   color: string;
 }
@@ -21,7 +21,7 @@ interface SliderProps {
 export default function Slider({
   onValueChange,
   value,
-  height,
+  thumbWidth,
   backgroundColor,
   color,
   maxValue,
@@ -164,23 +164,38 @@ export default function Slider({
 
   return (
     <GestureDetector gesture={gesture}>
-      <View style={styles.container} onLayout={measureLayout}>
+      <View
+        style={[
+          styles.container,
+          {
+            height: thumbWidth,
+            width: '100%',
+            alignItems: 'stretch',
+          },
+        ]}
+        onLayout={measureLayout}
+      >
         {/* Background Track */}
         <View
-          style={{
-            height,
-            backgroundColor,
-            borderRadius: height / 2,
-          }}
+          style={[
+            styles.track,
+            {
+              height: thumbWidth,
+              width: '100%',
+              backgroundColor,
+              borderRadius: thumbWidth / 2,
+            },
+          ]}
         />
 
         {/* Progress Track */}
         <Animated.View
           style={[
+            styles.track,
             {
-              height,
+              height: thumbWidth,
               backgroundColor: color,
-              borderRadius: height / 2,
+              borderRadius: thumbWidth / 2,
             },
             progressAnimatedStyle,
           ]}
@@ -189,14 +204,12 @@ export default function Slider({
         {/* Thumb */}
         <Animated.View
           style={[
+            styles.thumb,
             {
-              width: height,
-              height: height,
-              borderRadius: height / 2,
+              width: thumbWidth,
+              height: thumbWidth,
+              borderRadius: thumbWidth / 2,
               backgroundColor: color,
-            },
-            {
-              ...styles.thumb,
             },
             thumbAnimatedStyle,
           ]}
@@ -210,12 +223,17 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
+  },
+  track: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
   },
   thumb: {
     position: 'absolute',
-    top: -3,
     shadowOpacity: 0.25,
     shadowRadius: 3,
     shadowOffset: {
