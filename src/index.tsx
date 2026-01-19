@@ -3,32 +3,36 @@ import Animated, {
   Extrapolation,
   interpolate,
   useAnimatedStyle,
+  useSharedValue,
   type SharedValue,
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { HIT_SLOP } from './config';
-import { useRef } from 'react';
 
 interface SliderProps {
   onValueChange: (value: number) => void;
   maxValue: number;
   value: SharedValue<number>;
   thumbWidth: number;
+  thumbShadowColor?: string;
+  trackHeight: number;
   backgroundColor: string;
   color: string;
+  gestureActiveRef?: React.RefObject<boolean>;
 }
 
 export default function Slider({
   onValueChange,
   value,
   thumbWidth,
+  trackHeight,
   backgroundColor,
   color,
+  thumbShadowColor,
   maxValue,
+  gestureActiveRef,
 }: SliderProps) {
-  const isInteractingRef = useRef(false);
-  const sliderWidthRef = useRef(0);
-  const sliderThumbWidthRef = useRef(0);
+  const sliderWidth = useSharedValue(0);
 
   const handleValueChange = async (position: number) => {
     const clampedValue = Math.max(0, Math.min(position, maxValue));
@@ -39,7 +43,9 @@ export default function Slider({
       console.error('Error updating Reanimated Slider value:', error);
     } finally {
       setTimeout(() => {
-        isInteractingRef.current = false;
+        if (gestureActiveRef) {
+          gestureActiveRef.current = false;
+        }
       }, 100);
     }
   };
@@ -48,34 +54,34 @@ export default function Slider({
     .runOnJS(true)
     .hitSlop(HIT_SLOP)
     .onStart((event) => {
-      isInteractingRef.current = true;
+      if (gestureActiveRef) {
+        gestureActiveRef.current = true;
+      }
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
       const position = interpolate(
         clampedX,
-        [0, sliderWidthRef.current],
+        [0, sliderWidth.value],
         [0, maxValue],
         Extrapolation.CLAMP
       );
       value.set(position);
     })
     .onUpdate((event) => {
-      if (isInteractingRef.current) {
-        const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
-        const position = interpolate(
-          clampedX,
-          [0, sliderWidthRef.current],
-          [0, maxValue],
-          Extrapolation.CLAMP
-        );
-        value.set(position);
-      }
-    })
-    .onEnd(async (event) => {
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
       const position = interpolate(
         clampedX,
-        [0, sliderWidthRef.current],
+        [0, sliderWidth.value],
+        [0, maxValue],
+        Extrapolation.CLAMP
+      );
+      value.set(position);
+    })
+    .onEnd(async (event) => {
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
+      const position = interpolate(
+        clampedX,
+        [0, sliderWidth.value],
         [0, maxValue],
         Extrapolation.CLAMP
       );
@@ -89,13 +95,15 @@ export default function Slider({
     .runOnJS(true)
     .hitSlop(HIT_SLOP)
     .onBegin((event) => {
-      isInteractingRef.current = true;
+      if (gestureActiveRef) {
+        gestureActiveRef.current = true;
+      }
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
 
       const position = interpolate(
         clampedX,
-        [0, sliderWidthRef.current],
+        [0, sliderWidth.value],
         [0, maxValue],
         Extrapolation.CLAMP
       );
@@ -105,10 +113,10 @@ export default function Slider({
     .onFinalize(async (event, success) => {
       if (!success) return;
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidthRef.current));
+      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
       const position = interpolate(
         clampedX,
-        [0, sliderWidthRef.current],
+        [0, sliderWidth.value],
         [0, maxValue],
         Extrapolation.CLAMP
       );
@@ -130,7 +138,7 @@ export default function Slider({
         translateX: interpolate(
           value.value,
           [0, maxValue],
-          [0, sliderWidthRef.current - sliderThumbWidthRef.current],
+          [0, sliderWidth.value - thumbWidth],
           Extrapolation.CLAMP
         ),
       },
@@ -141,15 +149,14 @@ export default function Slider({
     width: interpolate(
       value.value,
       [0, maxValue],
-      [0, sliderWidthRef.current],
+      [0, sliderWidth.value],
       Extrapolation.CLAMP
     ),
   }));
 
-  const measureLayout = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    sliderWidthRef.current = width;
-    sliderThumbWidthRef.current = thumbWidth;
+  const measure = (event: LayoutChangeEvent) => {
+    sliderWidth.value = event.nativeEvent.layout.width;
+    console.debug('Slider width:', sliderWidth.value);
   };
 
   return (
@@ -158,20 +165,20 @@ export default function Slider({
         style={[
           styles.container,
           {
-            height: thumbWidth,
+            height: trackHeight,
           },
         ]}
-        onLayout={measureLayout}
+        onLayout={measure}
       >
         {/* Background Track */}
         <View
           style={[
             styles.track,
             {
-              height: thumbWidth,
+              height: trackHeight,
               width: '100%',
               backgroundColor,
-              borderRadius: thumbWidth / 2,
+              borderRadius: trackHeight / 2,
             },
           ]}
         />
@@ -181,9 +188,9 @@ export default function Slider({
           style={[
             styles.track,
             {
-              height: thumbWidth,
+              height: trackHeight,
               backgroundColor: color,
-              borderRadius: thumbWidth / 2,
+              borderRadius: trackHeight / 2,
             },
             progressAnimatedStyle,
           ]}
@@ -198,6 +205,7 @@ export default function Slider({
               height: thumbWidth,
               borderRadius: thumbWidth / 2,
               backgroundColor: color,
+              shadowColor: thumbShadowColor,
             },
             thumbAnimatedStyle,
           ]}
@@ -220,7 +228,7 @@ const styles = StyleSheet.create({
   },
   thumb: {
     position: 'absolute',
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.75,
     shadowRadius: 3,
     shadowOffset: {
       width: 0,

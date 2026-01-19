@@ -1,6 +1,6 @@
 {
   "name": "@jellify-music/react-native-reanimated-slider",
-  "version": "0.1.3",
+  "version": "0.2.1",
   "description": "A reusable slider component for React Native, powered by React Native Gesture Handler and Reanimated.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

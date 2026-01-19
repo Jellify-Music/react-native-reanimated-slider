@@ -13,9 +13,11 @@ export default function App() {
           console.log('Slider value:', val);
         }}
         maxValue={100}
-        thumbWidth={40}
+        thumbWidth={20}
+        trackHeight={10}
         backgroundColor="#ccc"
         color="#bb00ffe0"
+        thumbShadowColor="#000"
       />
     </View>
   );
