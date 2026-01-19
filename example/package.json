@@ -15,7 +15,10 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-web": "~0.21.0"
+    "react-native-web": "~0.21.0",
+    "@jellify-music/react-native-reanimated-slider": "file:../",
+    "react-native-reanimated": "4.2.0",
+    "react-native-gesture-handler": "2.30.0"
   },
   "private": true,
   "devDependencies": {

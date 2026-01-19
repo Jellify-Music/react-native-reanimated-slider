@@ -1,12 +1,22 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-animated-slider';
-
-const result = multiply(3, 7);
+import { View, StyleSheet } from 'react-native';
+import Slider from '@jellify-music/react-native-reanimated-slider';
+import { useSharedValue } from 'react-native-reanimated';
 
 export default function App() {
+  const value = useSharedValue(0);
+
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Slider
+        value={value}
+        onValueChange={(val) => {
+          console.log('Slider value:', val);
+        }}
+        maxValue={100}
+        height={40}
+        backgroundColor="#ccc"
+        color="#bb00ffe0"
+      />
     </View>
   );
 }
