@@ -74,7 +74,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: [lint, test, build-library, build-web]
+    needs: [lint, test, build-library]
 
     steps:
       - name: Checkout
