@@ -169,8 +169,6 @@ export default function Slider({
           styles.container,
           {
             height: thumbWidth,
-            width: '100%',
-            alignItems: 'stretch',
           },
         ]}
         onLayout={measureLayout}
@@ -222,10 +220,8 @@ export default function Slider({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    flex: 1,
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'stretch',
   },
   track: {
     position: 'absolute',
