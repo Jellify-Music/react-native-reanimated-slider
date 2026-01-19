@@ -90,9 +90,9 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build package
-        run: bun prepare
+        run: bunx bob build
 
       - name: Publish to npm
-        run: bunx publish --access public
+        run: npm publish --access public
         env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
