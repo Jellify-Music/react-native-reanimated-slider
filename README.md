@@ -1,4 +1,4 @@
-# react-native-animated-slider
+# react-native-reanimated-slider
 
 A reusable slider component for React Native, powered by React Native Gesture Handler and Reanimated.
 
@@ -6,7 +6,7 @@ A reusable slider component for React Native, powered by React Native Gesture Ha
 
 
 ```sh
-npm install react-native-animated-slider
+npm install react-native-reanimated-slider
 ```
 
 
@@ -14,7 +14,7 @@ npm install react-native-animated-slider
 
 
 ```js
-import { multiply } from 'react-native-animated-slider';
+import { multiply } from 'react-native-reanimated-slider';
 
 // ...
 
