@@ -93,6 +93,6 @@ jobs:
         run: bun prepare
 
       - name: Publish to npm
-        run: npm run publish --access public
+        run: npm publish --access public
         env:
           NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
