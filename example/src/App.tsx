@@ -13,7 +13,7 @@ export default function App() {
           console.log('Slider value:', val);
         }}
         maxValue={100}
-        height={40}
+        thumbWidth={40}
         backgroundColor="#ccc"
         color="#bb00ffe0"
       />
