@@ -19,6 +19,12 @@ interface SliderProps {
   backgroundColor: string;
   color: string;
   gestureActiveRef?: React.RefObject<boolean>;
+  hitSlop?: {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+  };
 }
 
 export default function Slider({
@@ -31,6 +37,7 @@ export default function Slider({
   thumbShadowColor,
   maxValue,
   gestureActiveRef,
+  hitSlop,
 }: SliderProps) {
   const sliderWidth = useSharedValue(0);
 
@@ -52,7 +59,7 @@ export default function Slider({
 
   const panGesture = Gesture.Pan()
     .runOnJS(true)
-    .hitSlop(HIT_SLOP)
+    .hitSlop(hitSlop || HIT_SLOP)
     .onStart((event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
@@ -93,7 +100,7 @@ export default function Slider({
 
   const tapGesture = Gesture.Tap()
     .runOnJS(true)
-    .hitSlop(HIT_SLOP)
+    .hitSlop(hitSlop || HIT_SLOP)
     .onBegin((event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;

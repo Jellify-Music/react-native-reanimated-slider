@@ -58,6 +58,7 @@ function MyComponent() {
 | `color` | `string` | ✓ | The color of the progress track and thumb |
 | `thumbShadowColor` | `string` | | The shadow color of the thumb |
 | `gestureActiveRef` | `RefObject<boolean>` | | A `ref` indicating whether the slider is being used |
+| `hitSlop` | `object` | | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/native-gesture/#hitslopsettings) object |
 
 ## Features
 
