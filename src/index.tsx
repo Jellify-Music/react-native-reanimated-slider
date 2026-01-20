@@ -19,12 +19,7 @@ interface SliderProps {
   backgroundColor: string;
   color: string;
   gestureActiveRef?: React.RefObject<boolean>;
-  hitSlop?: {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-  };
+  hitSlop?: number;
 }
 
 export default function Slider({
@@ -59,7 +54,7 @@ export default function Slider({
 
   const panGesture = Gesture.Pan()
     .runOnJS(true)
-    .hitSlop(hitSlop || HIT_SLOP)
+    .hitSlop(hitSlop ?? HIT_SLOP)
     .onStart((event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
@@ -100,7 +95,7 @@ export default function Slider({
 
   const tapGesture = Gesture.Tap()
     .runOnJS(true)
-    .hitSlop(hitSlop || HIT_SLOP)
+    .hitSlop(hitSlop ?? HIT_SLOP)
     .onBegin((event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
@@ -163,18 +158,16 @@ export default function Slider({
 
   const measure = (event: LayoutChangeEvent) => {
     sliderWidth.value = event.nativeEvent.layout.width;
-    console.debug('Slider width:', sliderWidth.value);
   };
 
   return (
     <GestureDetector gesture={gesture}>
       <View
-        style={[
-          styles.container,
-          {
-            height: trackHeight,
-          },
-        ]}
+        style={{
+          ...styles.container,
+          height: trackHeight * 2,
+          paddingVertical: trackHeight,
+        }}
         onLayout={measure}
       >
         {/* Background Track */}
