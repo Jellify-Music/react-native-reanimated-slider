@@ -2,6 +2,15 @@
 
 A performant, customizable slider component for React Native, powered by React Native Gesture Handler and Reanimated.
 
+![Jellify Demo](./screenshots/jellify-demo.gif)
+
+## Features
+
+- Smooth gesture handling with tap and pan support
+- Powered by Reanimated for 60fps animations
+- Fully customizable colors and shadows
+- Works on iOS and Android
+
 ## Installation
 
 ```sh
@@ -60,12 +69,30 @@ function MyComponent() {
 | `gestureActiveRef` | `RefObject<boolean>` | | A `ref` indicating whether the slider is being used |
 | `hitSlop` | `object` | | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/native-gesture/#hitslopsettings) object |
 
-## Features
+## Example Project
 
-- Smooth gesture handling with tap and pan support
-- Powered by Reanimated for 60fps animations
-- Fully customizable colors
-- Works on iOS and Android
+To run the example project locally:
+
+```sh
+# Clone the repo
+git clone https://github.com/Jellify-Music/react-native-animated-slider.git
+cd react-native-animated-slider
+
+# Install dependencies
+bun install
+
+# Navigate to the example folder
+cd example
+
+# Generate native projects
+bun prebuild
+
+# Run on iOS
+bun ios
+
+# Or run on Android
+bun android
+```
 
 ## Contributing
 

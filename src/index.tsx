@@ -206,6 +206,13 @@ export default function Slider({
               borderRadius: thumbWidth / 2,
               backgroundColor: color,
               shadowColor: thumbShadowColor,
+              shadowOffset: thumbShadowColor
+                ? {
+                    width: 0,
+                    height: thumbWidth / 2,
+                  }
+                : undefined,
+              shadowRadius: thumbShadowColor ? thumbWidth / 2 : undefined,
             },
             thumbAnimatedStyle,
           ]}
@@ -229,10 +236,5 @@ const styles = StyleSheet.create({
   thumb: {
     position: 'absolute',
     shadowOpacity: 0.75,
-    shadowRadius: 3,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
   },
 });

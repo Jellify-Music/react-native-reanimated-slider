@@ -4,21 +4,23 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "prebuild": "expo prebuild",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
+    "@jellify-music/react-native-reanimated-slider": "../",
     "expo": "~54.0.31",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-native": "0.81.5",
+    "react-native-gesture-handler": "2.28.0",
+    "react-native-reanimated": "~4.1.1",
     "react-native-web": "~0.21.0",
-    "@jellify-music/react-native-reanimated-slider": "../",
-    "react-native-reanimated": "4.2.0",
-    "react-native-gesture-handler": "2.30.0"
+    "react-native-worklets": "0.5.1"
   },
   "private": true,
   "devDependencies": {
