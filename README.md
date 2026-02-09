@@ -4,6 +4,10 @@ A performant, customizable slider component for React Native, powered by React N
 
 ![Jellify Demo](./screenshots/jellify-demo.gif)
 
+## Intro
+
+We built this slider for [Jellify](https://github.com/Jellify-Music/App) to have an easily customizable and performant slider with minimal dependencies. Leveraging Reanimated and Gesture Handler, this library uses the modules you already know and love - and works instantly in your project.
+
 ## Features
 
 - Smooth gesture handling with tap and pan support
