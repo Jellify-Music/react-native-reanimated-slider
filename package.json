@@ -35,6 +35,8 @@
     "example": "bun run --cwd example start",
     "clean": "del-cli lib",
     "prepare": "bob build",
+    "example:ios": "bun run --cwd example ios",
+    "example:android": "bun run --cwd example android",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
@@ -87,14 +89,15 @@
     "react": "19.2.0",
     "react-native": "0.83.1",
     "react-native-builder-bob": "^0.40.17",
-    "react-native-gesture-handler": ">= 2.30.0",
-    "react-native-reanimated": ">= 4.0.0",
     "release-it": "^19.0.4",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-gesture-handler": ">= 2.30.0",
+    "react-native-reanimated": "~4.1.0",
+    "react-native-worklets": ">= 0.5.1"
   },
   "workspaces": [
     "example"

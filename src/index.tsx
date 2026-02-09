@@ -157,6 +157,7 @@ export default function Slider({
   }));
 
   const measure = (event: LayoutChangeEvent) => {
+    'worklet';
     sliderWidth.value = event.nativeEvent.layout.width;
   };
 

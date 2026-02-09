@@ -1,7 +1,7 @@
 PODS:
   - EXConstants (18.0.13):
     - ExpoModulesCore
-  - Expo (54.0.31):
+  - Expo (54.0.32):
     - ExpoModulesCore
     - hermes-engine
     - RCTRequired
@@ -30,7 +30,7 @@ PODS:
     - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
     - ExpoModulesCore
-  - ExpoFont (14.0.10):
+  - ExpoFont (14.0.11):
     - ExpoModulesCore
   - ExpoKeepAwake (15.0.8):
     - ExpoModulesCore
@@ -1860,12 +1860,12 @@ PODS:
   - Yoga (0.0.0)
 
 DEPENDENCIES:
-  - "EXConstants (from `../../node_modules/.bun/expo-constants@18.0.13+b9b54f2bee3d8647/node_modules/expo-constants/ios`)"
-  - "Expo (from `../../node_modules/.bun/expo@54.0.31+4d4c9be4471518c2/node_modules/expo`)"
-  - "ExpoAsset (from `../../node_modules/.bun/expo-asset@12.0.12+b9b54f2bee3d8647/node_modules/expo-asset/ios`)"
-  - "ExpoFileSystem (from `../../node_modules/.bun/expo-file-system@19.0.21+b9b54f2bee3d8647/node_modules/expo-file-system/ios`)"
-  - "ExpoFont (from `../../node_modules/.bun/expo-font@14.0.10+b9b54f2bee3d8647/node_modules/expo-font/ios`)"
-  - "ExpoKeepAwake (from `../../node_modules/.bun/expo-keep-awake@15.0.8+52f488f52b098308/node_modules/expo-keep-awake/ios`)"
+  - "EXConstants (from `../../node_modules/.bun/expo-constants@18.0.13+00da644832c4f702/node_modules/expo-constants/ios`)"
+  - "Expo (from `../../node_modules/.bun/expo@54.0.32+30bd18588db83321/node_modules/expo`)"
+  - "ExpoAsset (from `../../node_modules/.bun/expo-asset@12.0.12+00da644832c4f702/node_modules/expo-asset/ios`)"
+  - "ExpoFileSystem (from `../../node_modules/.bun/expo-file-system@19.0.21+00da644832c4f702/node_modules/expo-file-system/ios`)"
+  - "ExpoFont (from `../../node_modules/.bun/expo-font@14.0.11+00da644832c4f702/node_modules/expo-font/ios`)"
+  - "ExpoKeepAwake (from `../../node_modules/.bun/expo-keep-awake@15.0.8+9d663e4299093a26/node_modules/expo-keep-awake/ios`)"
   - "ExpoModulesCore (from `../../node_modules/.bun/expo-modules-core@3.0.29+29d935be364b7279/node_modules/expo-modules-core`)"
   - "FBLazyVector (from `../../node_modules/.bun/react-native@0.81.5+29d935be364b7279/node_modules/react-native/Libraries/FBLazyVector`)"
   - "hermes-engine (from `../../node_modules/.bun/react-native@0.81.5+29d935be364b7279/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)"
@@ -1941,17 +1941,17 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   EXConstants:
-    :path: "../../node_modules/.bun/expo-constants@18.0.13+b9b54f2bee3d8647/node_modules/expo-constants/ios"
+    :path: "../../node_modules/.bun/expo-constants@18.0.13+00da644832c4f702/node_modules/expo-constants/ios"
   Expo:
-    :path: "../../node_modules/.bun/expo@54.0.31+4d4c9be4471518c2/node_modules/expo"
+    :path: "../../node_modules/.bun/expo@54.0.32+30bd18588db83321/node_modules/expo"
   ExpoAsset:
-    :path: "../../node_modules/.bun/expo-asset@12.0.12+b9b54f2bee3d8647/node_modules/expo-asset/ios"
+    :path: "../../node_modules/.bun/expo-asset@12.0.12+00da644832c4f702/node_modules/expo-asset/ios"
   ExpoFileSystem:
-    :path: "../../node_modules/.bun/expo-file-system@19.0.21+b9b54f2bee3d8647/node_modules/expo-file-system/ios"
+    :path: "../../node_modules/.bun/expo-file-system@19.0.21+00da644832c4f702/node_modules/expo-file-system/ios"
   ExpoFont:
-    :path: "../../node_modules/.bun/expo-font@14.0.10+b9b54f2bee3d8647/node_modules/expo-font/ios"
+    :path: "../../node_modules/.bun/expo-font@14.0.11+00da644832c4f702/node_modules/expo-font/ios"
   ExpoKeepAwake:
-    :path: "../../node_modules/.bun/expo-keep-awake@15.0.8+52f488f52b098308/node_modules/expo-keep-awake/ios"
+    :path: "../../node_modules/.bun/expo-keep-awake@15.0.8+9d663e4299093a26/node_modules/expo-keep-awake/ios"
   ExpoModulesCore:
     :path: "../../node_modules/.bun/expo-modules-core@3.0.29+29d935be364b7279/node_modules/expo-modules-core"
   FBLazyVector:
@@ -2098,10 +2098,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
-  Expo: 04993fbd7b06dc98ffac58da8847298470dc3db1
+  Expo: 4e503a041c59c4e34c8be262a135848ad5cd3710
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
   ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
-  ExpoFont: 35ac6191ed86bbf56b3ebd2d9154eda9fad5b509
+  ExpoFont: f543ce20a228dd702813668b1a07b46f51878d47
   ExpoKeepAwake: 55f75eca6499bb9e4231ebad6f3e9cb8f99c0296
   ExpoModulesCore: f3da4f1ab5a8375d0beafab763739dbee8446583
   FBLazyVector: e95a291ad2dadb88e42b06e0c5fb8262de53ec12
