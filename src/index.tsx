@@ -79,7 +79,14 @@ export default function Slider({
       );
       value.set(position);
     })
-    .onEnd(async (event) => {
+    .onFinalize(async (event, success) => {
+      if (!success) {
+        if (gestureActiveRef) {
+          gestureActiveRef.current = false;
+        }
+        return;
+      }
+
       const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
       const position = interpolate(
         clampedX,
@@ -113,7 +120,12 @@ export default function Slider({
       value.set(position);
     })
     .onFinalize(async (event, success) => {
-      if (!success) return;
+      if (!success) {
+        if (gestureActiveRef) {
+          gestureActiveRef.current = false;
+        }
+        return;
+      }
 
       const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
       const position = interpolate(
