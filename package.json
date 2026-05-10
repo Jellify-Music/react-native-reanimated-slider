@@ -40,7 +40,8 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\""
   },
   "keywords": [
     "react-native",

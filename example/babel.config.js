@@ -9,7 +9,7 @@ module.exports = function (api) {
 
   return getConfig(
     {
-      presets: ['babel-preset-expo'],
+      presets: ['module:metro-react-native-babel-preset'],
     },
     { root, pkg }
   );

@@ -1,0 +1,9 @@
+
+[!] Invalid `Podfile` file: undefined method `[]' for nil.
+
+ #  from /Users/violet/Workspace/Jellify/react-native-slider/example/ios/Podfile:7
+ #  -------------------------------------------
+ #  target 'example' do
+ >    config = use_native_modules!
+ #  
+ #  -------------------------------------------
