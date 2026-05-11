@@ -98,6 +98,26 @@ bun ios
 bun android
 ```
 
+## Testing
+
+This library includes a Jest test suite for utility functions. To run tests locally:
+
+```sh
+bun test
+```
+
+To run tests with coverage:
+
+```sh
+bun test --coverage
+```
+
+Tests are automatically run on every pull request and push to main via CI.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
+
 ## License
 
 MIT

@@ -25,9 +25,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ESNext",
-    "types": [
-      "jest"
-    ],
+    "types": ["jest"],
     "verbatimModuleSyntax": true
   }
 }
