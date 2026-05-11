@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Feature Request 💡
-    url: https://github.com/Jellify-Music/react-native-animated-slider/discussions/new?category=ideas
-    about: If you have a feature request, please create a new discussion on GitHub.
-  - name: Discussions on GitHub 💬
-    url: https://github.com/Jellify-Music/react-native-animated-slider/discussions
-    about: If this library works as promised but you need help, please ask questions there.
+  - name: Discord Server
+    url: https://discord.gg/yf8fBatktn
+    about: Ask questions or get in touch with us in our Discord server.

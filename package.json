@@ -1,6 +1,6 @@
 {
   "name": "@jellify-music/react-native-reanimated-slider",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A reusable slider component for React Native, powered by React Native Gesture Handler and Reanimated.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
@@ -40,7 +40,8 @@
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "test": "jest",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,md}\""
   },
   "keywords": [
     "react-native",
@@ -69,7 +70,7 @@
     "@react-native/eslint-config": "0.83.1",
     "@react-native/eslint-plugin": "^0.83.1",
     "@release-it/conventional-changelog": "^10.0.1",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/react": "^19.1.12",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "commitlint": "^19.8.1",

@@ -1,0 +1,70 @@
+name: ✨ Feature request
+description: Suggest a new feature or improvement for this library.
+labels: [feature]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Feature request
+
+        👋 Hi!
+
+        **Please fill the following carefully before opening a new issue ❗**
+        *(Your feature request may be ignored if it doesn't provide the required pieces of information)*
+  - type: checkboxes
+    attributes:
+      label: Before submitting a new issue
+      description: Please perform simple checks first.
+      options:
+        - label: I tested using the latest version of the library, as the feature might already be implemented.
+          required: true
+        - label: I tested using a [supported version](https://github.com/reactwg/react-native-releases/blob/main/docs/support.md) of react native.
+          required: true
+        - label: I checked for possible duplicate feature requests, with possible answers.
+          required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature summary
+      description: |
+        Provide a clear and concise description of what feature you would like to have.
+        Please include any details that might help us understand your use case.
+    validations:
+      required: true
+  - type: input
+    id: library-version
+    attributes:
+      label: Library version
+      description: What version of the library are you using?
+      placeholder: "x.x.x"
+    validations:
+      required: true
+  - type: textarea
+    id: react-native-info
+    attributes:
+      label: Environment info
+      description: Run `react-native info` in your terminal and paste the results here.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case
+      description: How do you plan to use this feature? What problem does it solve?
+    validations:
+      required: true
+  - type: textarea
+    id: alternative-solutions
+    attributes:
+      label: Alternative solutions considered
+      description: Are there any alternative solutions you've tried or considered?
+    validations:
+      required: false
+  - type: textarea
+    id: reproducible-example
+    attributes:
+      label: Reproducible example repository
+      description: Please provide a link to a repository on GitHub with an example of how you plan to use the feature.
+    validations:
+      required: false

@@ -60,18 +60,18 @@ function MyComponent() {
 
 ## Props
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `value` | `SharedValue<number>` | ✓ | A Reanimated shared value that controls the slider position |
-| `onValueChange` | `(value: number) => void` | ✓ | Callback fired when the user releases the slider |
-| `maxValue` | `number` | ✓ | The maximum value of the slider |
-| `thumbWidth` | `number` | ✓ | The width and height of the thumb (circular) |
-| `trackHeight` | `number` | ✓ | The height of the track |
-| `backgroundColor` | `string` | ✓ | The color of the background track |
-| `color` | `string` | ✓ | The color of the progress track and thumb |
-| `thumbShadowColor` | `string` | | The shadow color of the thumb |
-| `gestureActiveRef` | `RefObject<boolean>` | | A `ref` indicating whether the slider is being used |
-| `hitSlop` | `number` | | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/native-gesture/#hitslopsettings) value to apply to the slider |
+| Prop               | Type                      | Required | Description                                                                                                                                       |
+| ------------------ | ------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`            | `SharedValue<number>`     | ✓        | A Reanimated shared value that controls the slider position                                                                                       |
+| `onValueChange`    | `(value: number) => void` | ✓        | Callback fired when the user releases the slider                                                                                                  |
+| `maxValue`         | `number`                  | ✓        | The maximum value of the slider                                                                                                                   |
+| `thumbWidth`       | `number`                  | ✓        | The width and height of the thumb (circular)                                                                                                      |
+| `trackHeight`      | `number`                  | ✓        | The height of the track                                                                                                                           |
+| `backgroundColor`  | `string`                  | ✓        | The color of the background track                                                                                                                 |
+| `color`            | `string`                  | ✓        | The color of the progress track and thumb                                                                                                         |
+| `thumbShadowColor` | `string`                  |          | The shadow color of the thumb                                                                                                                     |
+| `gestureActiveRef` | `RefObject<boolean>`      |          | A `ref` indicating whether the slider is being used                                                                                               |
+| `hitSlop`          | `number`                  |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/native-gesture/#hitslopsettings) value to apply to the slider |
 
 ## Example Project
 
@@ -97,6 +97,26 @@ bun ios
 # Or run on Android
 bun android
 ```
+
+## Testing
+
+This library includes a Jest test suite for utility functions. To run tests locally:
+
+```sh
+bun test
+```
+
+To run tests with coverage:
+
+```sh
+bun test --coverage
+```
+
+Tests are automatically run on every pull request and push to main via CI.
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
 
 ## License
 

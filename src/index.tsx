@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { HIT_SLOP } from './config';
+import { clampValue, sliderPositionFromX } from './utils/slider';
 
 interface SliderProps {
   onValueChange: (value: number) => void;
@@ -37,7 +38,7 @@ export default function Slider({
   const sliderWidth = useSharedValue(0);
 
   const handleValueChange = async (position: number) => {
-    const clampedValue = Math.max(0, Math.min(position, maxValue));
+    const clampedValue = clampValue(position, maxValue);
 
     try {
       await onValueChange(clampedValue);
@@ -60,32 +61,26 @@ export default function Slider({
         gestureActiveRef.current = true;
       }
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
-      const position = interpolate(
-        clampedX,
-        [0, sliderWidth.value],
-        [0, maxValue],
-        Extrapolation.CLAMP
+      const position = sliderPositionFromX(
+        event.x,
+        sliderWidth.value,
+        maxValue
       );
       value.set(position);
     })
     .onUpdate((event) => {
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
-      const position = interpolate(
-        clampedX,
-        [0, sliderWidth.value],
-        [0, maxValue],
-        Extrapolation.CLAMP
+      const position = sliderPositionFromX(
+        event.x,
+        sliderWidth.value,
+        maxValue
       );
       value.set(position);
     })
     .onEnd(async (event) => {
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
-      const position = interpolate(
-        clampedX,
-        [0, sliderWidth.value],
-        [0, maxValue],
-        Extrapolation.CLAMP
+      const position = sliderPositionFromX(
+        event.x,
+        sliderWidth.value,
+        maxValue
       );
 
       value.set(position);
@@ -101,26 +96,20 @@ export default function Slider({
         gestureActiveRef.current = true;
       }
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
-
-      const position = interpolate(
-        clampedX,
-        [0, sliderWidth.value],
-        [0, maxValue],
-        Extrapolation.CLAMP
+      const position = sliderPositionFromX(
+        event.x,
+        sliderWidth.value,
+        maxValue
       );
-
       value.set(position);
     })
     .onFinalize(async (event, success) => {
       if (!success) return;
 
-      const clampedX = Math.max(0, Math.min(event.x, sliderWidth.value));
-      const position = interpolate(
-        clampedX,
-        [0, sliderWidth.value],
-        [0, maxValue],
-        Extrapolation.CLAMP
+      const position = sliderPositionFromX(
+        event.x,
+        sliderWidth.value,
+        maxValue
       );
 
       value.set(position);
@@ -177,7 +166,6 @@ export default function Slider({
             styles.track,
             {
               height: trackHeight,
-              width: '100%',
               backgroundColor,
               borderRadius: trackHeight / 2,
             },
@@ -233,6 +221,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
+    width: '100%',
   },
   thumb: {
     position: 'absolute',
