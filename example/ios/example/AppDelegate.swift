@@ -38,12 +38,3 @@ class AppDelegate: RCTAppDelegate {
     return RCTLinkingManager.application(application, continue: userActivity, restorationHandler: restorationHandler)
   }
 }
-
-  override func bundleURL() -> URL? {
-#if DEBUG
-    return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: ".expo/.virtual-metro-entry")
-#else
-    return Bundle.main.url(forResource: "main", withExtension: "jsbundle")
-#endif
-  }
-}
