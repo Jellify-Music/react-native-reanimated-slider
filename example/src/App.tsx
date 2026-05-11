@@ -1,28 +1,27 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Slider from '@jellify-music/react-native-reanimated-slider';
 import { useSharedValue } from 'react-native-reanimated';
-import Animated from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 export default function App() {
   const gestureActiveRef = useRef(false);
 
   const value = useSharedValue(0);
 
+  const [state, setState] = useState('0.00');
+
   const onValueChange = (val: number) => {
     console.log(val);
-    value.value = val;
+    setState(val.toFixed(2));
   };
 
   return (
     <GestureHandlerRootView>
       <View style={styles.container}>
-        <Animated.View style={styles.textContainer}>
-          <Animated.Text style={styles.text}>
-            Current Value: {value.value.toFixed(2)}
-          </Animated.Text>
-        </Animated.View>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Value: {state}</Text>
+        </View>
 
         <Slider
           value={value}
