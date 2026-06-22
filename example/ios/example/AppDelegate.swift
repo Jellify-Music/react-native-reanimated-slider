@@ -21,11 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     reactNativeDelegate = delegate
     reactNativeFactory = factory
     
+    // Create a window for fallback (SceneDelegate will handle modern apps)
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    self.window = window
+    
     factory.startReactNative(
       withModuleName: "example",
       in: window,
       launchOptions: launchOptions
     )
+    
+    window.makeKeyAndVisible()
     
     return true
   }
