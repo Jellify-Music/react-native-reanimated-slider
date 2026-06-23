@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import Animated, {
   Extrapolation,

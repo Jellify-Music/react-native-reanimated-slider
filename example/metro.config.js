@@ -15,6 +15,4 @@ const config = withMetroConfig(getDefaultConfig(__dirname), {
   dirname: __dirname,
 });
 
-config.resolver.unstable_enablePackageExports = true;
-
 module.exports = config;

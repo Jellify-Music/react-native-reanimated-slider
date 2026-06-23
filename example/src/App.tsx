@@ -17,7 +17,7 @@ export default function App() {
   };
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>Value: {state}</Text>
