@@ -11,7 +11,7 @@ export default function App() {
 
   const [state, setState] = useState('0.00');
 
-  const onValueChange = (val: number) => {
+  const onValueChange = async (val: number) => {
     console.log(val);
     setState(val.toFixed(2));
   };
