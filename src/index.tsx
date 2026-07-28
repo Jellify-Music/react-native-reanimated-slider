@@ -9,9 +9,10 @@ import Animated, {
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { HIT_SLOP } from './config';
 import { clampValue, sliderPositionFromX } from './utils/slider';
+import type { RefObject } from 'react';
 
 interface SliderProps {
-  onValueChange: (value: number) => void;
+  onValueChange: (value: number) => Promise<void>;
   maxValue: number;
   value: SharedValue<number>;
   thumbWidth: number;
@@ -19,7 +20,7 @@ interface SliderProps {
   trackHeight: number;
   backgroundColor: string;
   color: string;
-  gestureActiveRef?: React.RefObject<boolean>;
+  gestureActiveRef?: RefObject<boolean>;
   hitSlop?: number;
 }
 
