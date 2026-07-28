@@ -4,11 +4,12 @@
   "main": "index.js",
   "scripts": {
     "start": "react-native start",
-    "android": "echo 'For Android: Open android/ in Android Studio and run the app'",
-    "ios": "echo 'For iOS: Open ios/example.xcworkspace in Xcode and run the app'"
+    "android": "react-native run-android",
+    "ios": "react-native run-ios"
   },
   "dependencies": {
     "@jellify-music/react-native-reanimated-slider": "../",
+    "@react-native/codegen": "0.86.0",
     "react": "19.2.3",
     "react-native": "0.86.0",
     "react-native-gesture-handler": "3.0.2",

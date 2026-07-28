@@ -49,6 +49,7 @@
       "version": "1.0.0",
       "dependencies": {
         "@jellify-music/react-native-reanimated-slider": "../",
+        "@react-native/codegen": "0.86.0",
         "react": "19.2.3",
         "react-native": "0.86.0",
         "react-native-gesture-handler": "3.0.2",
