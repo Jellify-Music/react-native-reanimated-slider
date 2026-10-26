@@ -6,7 +6,14 @@ import Animated, {
   useSharedValue,
   type SharedValue,
 } from 'react-native-reanimated';
-import { GestureDetector, Gesture } from 'react-native-gesture-handler';
+import {
+  GestureDetector,
+  useCompetingGestures,
+  useNativeGesture,
+  usePanGesture,
+  useSimultaneousGestures,
+  useTapGesture,
+} from 'react-native-gesture-handler';
 import { HIT_SLOP } from './config';
 import { clampValue, sliderPositionFromX } from './utils/slider';
 import type { RefObject } from 'react';
@@ -54,10 +61,10 @@ export default function Slider({
     }
   };
 
-  const panGesture = Gesture.Pan()
-    .runOnJS(true)
-    .hitSlop(hitSlop ?? HIT_SLOP)
-    .onStart((event) => {
+  const panGesture = usePanGesture({
+    runOnJS: true,
+    hitSlop: hitSlop ?? HIT_SLOP,
+    onActivate: (event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
       }
@@ -68,16 +75,16 @@ export default function Slider({
         maxValue
       );
       value.set(position);
-    })
-    .onUpdate((event) => {
+    },
+    onUpdate: (event) => {
       const position = sliderPositionFromX(
         event.x,
         sliderWidth.value,
         maxValue
       );
       value.set(position);
-    })
-    .onEnd(async (event) => {
+    },
+    onDeactivate: async (event) => {
       const position = sliderPositionFromX(
         event.x,
         sliderWidth.value,
@@ -87,12 +94,13 @@ export default function Slider({
       value.set(position);
 
       await handleValueChange(position);
-    });
+    },
+  });
 
-  const tapGesture = Gesture.Tap()
-    .runOnJS(true)
-    .hitSlop(hitSlop ?? HIT_SLOP)
-    .onBegin((event) => {
+  const tapGesture = useTapGesture({
+    runOnJS: true,
+    hitSlop: hitSlop ?? HIT_SLOP,
+    onBegin: (event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
       }
@@ -103,9 +111,9 @@ export default function Slider({
         maxValue
       );
       value.set(position);
-    })
-    .onFinalize(async (event, success) => {
-      if (!success) return;
+    },
+    onFinalize: async (event) => {
+      if (event.canceled) return;
 
       const position = sliderPositionFromX(
         event.x,
@@ -116,13 +124,14 @@ export default function Slider({
       value.set(position);
 
       await handleValueChange(position);
-    });
+    },
+  });
 
-  const nativeGesture = Gesture.Native();
+  const nativeGesture = useNativeGesture();
 
-  const slideGesture = Gesture.Simultaneous(tapGesture, panGesture);
+  const slideGesture = useSimultaneousGestures(tapGesture, panGesture);
 
-  const gesture = Gesture.Race(slideGesture, nativeGesture);
+  const gesture = useCompetingGestures(slideGesture, nativeGesture);
 
   const thumbAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
