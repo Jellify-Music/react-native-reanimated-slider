@@ -29,8 +29,9 @@ bun add @jellify-music/react-native-reanimated-slider
 
 This library requires the following peer dependencies:
 
-- `react-native-reanimated: "~4.1.0"`
-- `react-native-gesture-handler: ">= 2.30.0"`
+- `react-native-reanimated: ">= 4.3.0"`
+- `react-native-worklets: ">= 0.9.1"`
+- `react-native-gesture-handler: ">= 3.0.0"`
 
 ## Usage
 
@@ -71,7 +72,7 @@ function MyComponent() {
 | `color`            | `string`                  | ✓        | The color of the progress track and thumb                                                                                                         |
 | `thumbShadowColor` | `string`                  |          | The shadow color of the thumb                                                                                                                     |
 | `gestureActiveRef` | `RefObject<boolean>`      |          | A `ref` indicating whether the slider is being used                                                                                               |
-| `hitSlop`          | `number`                  |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/native-gesture/#hitslopsettings) value to apply to the slider |
+| `hitSlop`          | `number`                  |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/use-pan-gesture#hitslop) value to apply to the slider |
 
 ## Example Project
 
