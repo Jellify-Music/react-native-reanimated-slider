@@ -1,4 +1,8 @@
-import { clampValue, sliderPositionFromX } from '../utils/slider';
+import {
+  clampValue,
+  sliderPositionFromX,
+  sliderPositionFromY,
+} from '../utils/slider';
 
 describe('slider utils', () => {
   describe('clampValue', () => {
@@ -30,6 +34,32 @@ describe('slider utils', () => {
 
     it('clamps to 0 when x is negative', () => {
       expect(sliderPositionFromX(-20, 100, 80)).toBe(0);
+    });
+  });
+
+  describe('sliderPositionFromY', () => {
+    it('returns 0 when height is zero', () => {
+      expect(sliderPositionFromY(20, 0, 100)).toBe(0);
+    });
+
+    it('returns maxValue at the top edge', () => {
+      expect(sliderPositionFromY(0, 100, 80)).toBe(80);
+    });
+
+    it('returns 0 at the bottom edge', () => {
+      expect(sliderPositionFromY(100, 100, 80)).toBe(0);
+    });
+
+    it('calculates a proportional slider value from the bottom', () => {
+      expect(sliderPositionFromY(25, 100, 200)).toBe(150);
+    });
+
+    it('clamps to maxValue when y is above the slider', () => {
+      expect(sliderPositionFromY(-20, 100, 80)).toBe(80);
+    });
+
+    it('clamps to 0 when y is below the slider', () => {
+      expect(sliderPositionFromY(150, 100, 80)).toBe(0);
     });
   });
 });
