@@ -126,13 +126,13 @@ bun android
 This library includes a Jest test suite covering the slider utilities and component behavior (gestures, value mapping in both orientations, and `onValueChange` handling). To run tests locally:
 
 ```sh
-bun test
+bun run test
 ```
 
 To run tests with coverage:
 
 ```sh
-bun test --coverage
+bun run test --coverage
 ```
 
 Tests are automatically run on every pull request and push to main via CI.

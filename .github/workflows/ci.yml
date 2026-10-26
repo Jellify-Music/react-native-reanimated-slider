@@ -45,7 +45,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Run unit tests
-        run: bun test --maxWorkers=2 --coverage
+        run: bun run test --maxWorkers=2 --coverage
 
   build-library:
     runs-on: ubuntu-latest

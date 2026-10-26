@@ -80,7 +80,7 @@ export default function Slider({
 
   const panGesture = usePanGesture({
     runOnJS: true,
-    testID,
+    testID: testID && `${testID}-pan`,
     hitSlop: hitSlop ?? HIT_SLOP,
     onActivate: (event) => {
       if (gestureActiveRef) {
@@ -103,7 +103,7 @@ export default function Slider({
 
   const tapGesture = useTapGesture({
     runOnJS: true,
-    testID,
+    testID: testID && `${testID}-tap`,
     hitSlop: hitSlop ?? HIT_SLOP,
     onBegin: (event) => {
       if (gestureActiveRef) {
