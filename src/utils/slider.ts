@@ -31,6 +31,24 @@ export function sliderPositionFromX(
 }
 
 /**
+ * Calculates the slider position based on the y-coordinate.
+ * Vertical sliders fill from bottom to top, so a y-coordinate of 0
+ * (the top edge) maps to the maximum value.
+ *
+ * @param y The y-coordinate
+ * @param height The height of the slider
+ * @param maxValue The maximum value of the slider
+ * @returns The calculated slider position
+ */
+export function sliderPositionFromY(
+  y: number,
+  height: number,
+  maxValue: number
+): number {
+  return sliderPositionFromX(height - y, height, maxValue);
+}
+
+/**
  * Clamps the slider value between 0 and the maximum value.
  *
  * @param position The current slider position

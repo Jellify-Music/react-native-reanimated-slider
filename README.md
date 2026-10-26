@@ -13,6 +13,7 @@ We built this slider for [Jellify](https://github.com/Jellify-Music/App) to have
 - Smooth gesture handling with tap and pan support
 - Powered by Reanimated for 60fps animations
 - Fully customizable colors and shadows
+- Horizontal and vertical orientations
 - Works on iOS and Android
 
 ## Installation
@@ -59,20 +60,41 @@ function MyComponent() {
 }
 ```
 
+### Vertical Orientation
+
+Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill from bottom to top and stretch to the height of their parent, so give the parent a height:
+
+```tsx
+<View style={{ height: 200 }}>
+  <Slider
+    orientation="vertical"
+    value={volume}
+    onValueChange={onVolumeChange}
+    maxValue={1}
+    thumbWidth={24}
+    trackHeight={8}
+    backgroundColor="#e0e0e0"
+    color="#6200ee"
+  />
+</View>
+```
+
 ## Props
 
-| Prop               | Type                      | Required | Description                                                                                                                                       |
-| ------------------ | ------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`            | `SharedValue<number>`     | ✓        | A Reanimated shared value that controls the slider position                                                                                       |
-| `onValueChange`    | `(value: number) => void` | ✓        | Callback fired when the user releases the slider                                                                                                  |
-| `maxValue`         | `number`                  | ✓        | The maximum value of the slider                                                                                                                   |
-| `thumbWidth`       | `number`                  | ✓        | The width and height of the thumb (circular)                                                                                                      |
-| `trackHeight`      | `number`                  | ✓        | The height of the track                                                                                                                           |
-| `backgroundColor`  | `string`                  | ✓        | The color of the background track                                                                                                                 |
-| `color`            | `string`                  | ✓        | The color of the progress track and thumb                                                                                                         |
-| `thumbShadowColor` | `string`                  |          | The shadow color of the thumb                                                                                                                     |
-| `gestureActiveRef` | `RefObject<boolean>`      |          | A `ref` indicating whether the slider is being used                                                                                               |
-| `hitSlop`          | `number`                  |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/use-pan-gesture#hitslop) value to apply to the slider |
+| Prop               | Type                         | Required | Description                                                                                                                                   |
+| ------------------ | ---------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`            | `SharedValue<number>`        | ✓        | A Reanimated shared value that controls the slider position                                                                                   |
+| `onValueChange`    | `(value: number) => void`    | ✓        | Callback fired when the user releases the slider                                                                                              |
+| `maxValue`         | `number`                     | ✓        | The maximum value of the slider                                                                                                               |
+| `thumbWidth`       | `number`                     | ✓        | The width and height of the thumb (circular)                                                                                                  |
+| `trackHeight`      | `number`                     | ✓        | The thickness of the track (its width when vertical)                                                                                          |
+| `backgroundColor`  | `string`                     | ✓        | The color of the background track                                                                                                             |
+| `color`            | `string`                     | ✓        | The color of the progress track and thumb                                                                                                     |
+| `thumbShadowColor` | `string`                     |          | The shadow color of the thumb                                                                                                                 |
+| `gestureActiveRef` | `RefObject<boolean>`         |          | A `ref` indicating whether the slider is being used                                                                                           |
+| `hitSlop`          | `number`                     |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/use-pan-gesture#hitslop) value to apply to the slider     |
+| `orientation`      | `'horizontal' \| 'vertical'` |          | The direction of the slider. Defaults to `'horizontal'`. Vertical sliders fill from bottom to top                                             |
+| `testID`           | `string`                     |          | A test ID for the slider container. Its gestures get `${testID}-pan` and `${testID}-tap`, for use with Gesture Handler's `getByGestureTestId` |
 
 ## Example Project
 
@@ -101,16 +123,16 @@ bun android
 
 ## Testing
 
-This library includes a Jest test suite for utility functions. To run tests locally:
+This library includes a Jest test suite covering the slider utilities and component behavior (gestures, value mapping in both orientations, and `onValueChange` handling). To run tests locally:
 
 ```sh
-bun test
+bun run test
 ```
 
 To run tests with coverage:
 
 ```sh
-bun test --coverage
+bun run test --coverage
 ```
 
 Tests are automatically run on every pull request and push to main via CI.
