@@ -92,7 +92,7 @@ Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill 
 | `color`            | `string`                     | ✓        | The color of the progress track and thumb                                                                                                     |
 | `thumbShadowColor` | `string`                     |          | The shadow color of the thumb                                                                                                                 |
 | `gestureActiveRef` | `RefObject<boolean>`         |          | A `ref` indicating whether the slider is being used                                                                                           |
-| `hitSlop`          | `number`                     |          | A [`hitSlop`](https://docs.swmansion.com/react-native-gesture-handler/docs/gestures/use-pan-gesture#hitslop) value to apply to the slider     |
+| `hitSlop`          | `number`                     |          | Extra touchable distance around the track. Defaults to `20`. Laid out as padding with an equal negative margin, so it doesn't affect layout   |
 | `orientation`      | `'horizontal' \| 'vertical'` |          | The direction of the slider. Defaults to `'horizontal'`. Vertical sliders fill from bottom to top                                             |
 | `testID`           | `string`                     |          | A test ID for the slider container. Its gestures get `${testID}-pan` and `${testID}-tap`, for use with Gesture Handler's `getByGestureTestId` |
 

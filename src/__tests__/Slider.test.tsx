@@ -17,12 +17,14 @@ interface RenderSliderOptions {
   orientation?: SliderOrientation;
   onValueChange?: jest.Mock;
   gestureActiveRef?: RefObject<boolean>;
+  hitSlop?: number;
 }
 
 async function renderSlider({
   orientation = 'horizontal',
   onValueChange = jest.fn(async () => {}),
   gestureActiveRef,
+  hitSlop,
 }: RenderSliderOptions = {}) {
   const value: SharedValue<number> = makeMutable(0);
 
@@ -33,6 +35,7 @@ async function renderSlider({
       value={value}
       onValueChange={onValueChange}
       gestureActiveRef={gestureActiveRef}
+      hitSlop={hitSlop}
       maxValue={MAX_VALUE}
       thumbWidth={10}
       trackHeight={4}
@@ -244,6 +247,28 @@ describe('Slider', () => {
       await flushPromises();
 
       expect(onValueChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('touch area', () => {
+    it('lays out the hit slop around a horizontal track without changing its size', async () => {
+      await renderSlider({ hitSlop: 30 });
+
+      expect(screen.getByTestId(TEST_ID)).toHaveStyle({
+        height: 68,
+        paddingVertical: 34,
+        marginVertical: -30,
+      });
+    });
+
+    it('lays out the hit slop around a vertical track without changing its size', async () => {
+      await renderSlider({ orientation: 'vertical', hitSlop: 30 });
+
+      expect(screen.getByTestId(TEST_ID)).toHaveStyle({
+        width: 68,
+        paddingHorizontal: 34,
+        marginHorizontal: -30,
+      });
     });
   });
 });

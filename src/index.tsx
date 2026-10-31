@@ -62,6 +62,14 @@ export default function Slider({
       ? sliderPositionFromY(y, sliderLength.value, maxValue)
       : sliderPositionFromX(x, sliderLength.value, maxValue);
 
+  const touchSlop = hitSlop ?? HIT_SLOP;
+
+  // Touches outside a view's layout never reach its gestures on Fabric, so the
+  // cross-axis slop is laid out as padding, offset by an equal negative margin
+  const mainAxisHitSlop = isVertical
+    ? { top: touchSlop, bottom: touchSlop }
+    : { left: touchSlop, right: touchSlop };
+
   const handleValueChange = async (position: number) => {
     const clampedValue = clampValue(position, maxValue);
 
@@ -81,7 +89,7 @@ export default function Slider({
   const panGesture = usePanGesture({
     runOnJS: true,
     testID: testID && `${testID}-pan`,
-    hitSlop: hitSlop ?? HIT_SLOP,
+    hitSlop: mainAxisHitSlop,
     onActivate: (event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
@@ -104,7 +112,7 @@ export default function Slider({
   const tapGesture = useTapGesture({
     runOnJS: true,
     testID: testID && `${testID}-tap`,
-    hitSlop: hitSlop ?? HIT_SLOP,
+    hitSlop: mainAxisHitSlop,
     onBegin: (event) => {
       if (gestureActiveRef) {
         gestureActiveRef.current = true;
@@ -190,13 +198,15 @@ export default function Slider({
           isVertical
             ? {
                 ...styles.verticalContainer,
-                width: trackHeight * 2,
-                paddingHorizontal: trackHeight,
+                width: (trackHeight + touchSlop) * 2,
+                paddingHorizontal: trackHeight + touchSlop,
+                marginHorizontal: -touchSlop,
               }
             : {
                 ...styles.horizontalContainer,
-                height: trackHeight * 2,
-                paddingVertical: trackHeight,
+                height: (trackHeight + touchSlop) * 2,
+                paddingVertical: trackHeight + touchSlop,
+                marginVertical: -touchSlop,
               }
         }
         onLayout={measure}
