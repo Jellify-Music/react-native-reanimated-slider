@@ -1,5 +1,6 @@
-import { HIT_SLOP } from './config';
-import useSliderPanGesture from './hooks/pan';
+import { HIT_SLOP } from '../configs';
+import useSliderPanGesture from '../hooks/pan';
+import { SliderOrientations } from '../enums';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -17,11 +18,11 @@ import {
   clampValue,
   sliderPositionFromX,
   sliderPositionFromY,
-} from './utils/slider';
+} from '../utils/slider';
 import type { RefObject } from 'react';
-import type { HitSlop, SliderOrientation } from './types';
+import type { HitSlop, SliderOrientation } from '../types';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
-import { useSliderTapGesture } from './hooks/tap';
+import { useSliderTapGesture } from '../hooks/tap';
 
 interface SliderProps {
   onValueChange: (value: number) => Promise<void>;
@@ -49,10 +50,10 @@ export default function Slider({
   maxValue,
   gestureActiveRef,
   hitSlop = HIT_SLOP,
-  orientation = 'horizontal',
+  orientation = SliderOrientations.Horizontal,
   testID,
 }: SliderProps) {
-  const isVertical = orientation === 'vertical';
+  const isVertical = orientation === SliderOrientations.Vertical;
 
   // Width of a horizontal slider, or height of a vertical one
   const sliderLength = useSharedValue(0);

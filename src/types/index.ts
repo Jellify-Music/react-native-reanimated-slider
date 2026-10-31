@@ -1,3 +1,5 @@
+import type { SliderOrientations } from '../enums';
+
 export type HitSlop = {
   top?: number;
   bottom?: number;
@@ -5,4 +7,5 @@ export type HitSlop = {
   right?: number;
 };
 
-export type SliderOrientation = 'horizontal' | 'vertical';
+export type SliderOrientation =
+  (typeof SliderOrientations)[keyof typeof SliderOrientations];

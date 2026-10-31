@@ -6,7 +6,7 @@ import {
 import { GestureHandlerRootView, State } from 'react-native-gesture-handler';
 import { makeMutable, type SharedValue } from 'react-native-reanimated';
 import type { RefObject } from 'react';
-import Slider from '../index';
+import Slider from '../components/index';
 import type { SliderOrientation } from '../types';
 
 const TEST_ID = 'slider';
