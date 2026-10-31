@@ -1,4 +1,6 @@
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { HIT_SLOP } from '../configs';
+import useSliderPanGesture from '../hooks/pan';
+import { SliderOrientations } from '../enums';
 import Animated, {
   Extrapolation,
   interpolate,
@@ -10,18 +12,17 @@ import {
   GestureDetector,
   useCompetingGestures,
   useNativeGesture,
-  usePanGesture,
   useSimultaneousGestures,
-  useTapGesture,
 } from 'react-native-gesture-handler';
-import { HIT_SLOP } from './config';
 import {
   clampValue,
   sliderPositionFromX,
   sliderPositionFromY,
-} from './utils/slider';
+} from '../utils/slider';
 import type { RefObject } from 'react';
-import type { SliderOrientation } from './types';
+import type { HitSlop, SliderOrientation } from '../types';
+import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { useSliderTapGesture } from '../hooks/tap';
 
 interface SliderProps {
   onValueChange: (value: number) => Promise<void>;
@@ -48,11 +49,11 @@ export default function Slider({
   thumbShadowColor,
   maxValue,
   gestureActiveRef,
-  hitSlop,
-  orientation = 'horizontal',
+  hitSlop = HIT_SLOP,
+  orientation = SliderOrientations.Horizontal,
   testID,
 }: SliderProps) {
-  const isVertical = orientation === 'vertical';
+  const isVertical = orientation === SliderOrientations.Vertical;
 
   // Width of a horizontal slider, or height of a vertical one
   const sliderLength = useSharedValue(0);
@@ -61,6 +62,14 @@ export default function Slider({
     isVertical
       ? sliderPositionFromY(y, sliderLength.value, maxValue)
       : sliderPositionFromX(x, sliderLength.value, maxValue);
+
+  /**
+   * Main axis hit slop for the slider gesture.
+   * Top and bottom for vertical sliders, left and right for horizontal sliders
+   */
+  const mainAxisHitSlop: HitSlop = isVertical
+    ? { top: hitSlop, bottom: hitSlop }
+    : { left: hitSlop, right: hitSlop };
 
   const handleValueChange = async (position: number) => {
     const clampedValue = clampValue(position, maxValue);
@@ -78,49 +87,22 @@ export default function Slider({
     }
   };
 
-  const panGesture = usePanGesture({
-    runOnJS: true,
-    testID: testID && `${testID}-pan`,
-    hitSlop: hitSlop ?? HIT_SLOP,
-    onActivate: (event) => {
-      if (gestureActiveRef) {
-        gestureActiveRef.current = true;
-      }
-
-      value.set(positionFromEvent(event));
-    },
-    onUpdate: (event) => {
-      value.set(positionFromEvent(event));
-    },
-    onDeactivate: async (event) => {
-      const position = positionFromEvent(event);
-
-      value.set(position);
-
-      await handleValueChange(position);
-    },
+  const panGesture = useSliderPanGesture({
+    testID,
+    mainAxisHitSlop: mainAxisHitSlop,
+    gestureActiveRef,
+    value,
+    positionFromEvent,
+    handleValueChange,
   });
 
-  const tapGesture = useTapGesture({
-    runOnJS: true,
-    testID: testID && `${testID}-tap`,
-    hitSlop: hitSlop ?? HIT_SLOP,
-    onBegin: (event) => {
-      if (gestureActiveRef) {
-        gestureActiveRef.current = true;
-      }
-
-      value.set(positionFromEvent(event));
-    },
-    onFinalize: async (event) => {
-      if (event.canceled) return;
-
-      const position = positionFromEvent(event);
-
-      value.set(position);
-
-      await handleValueChange(position);
-    },
+  const tapGesture = useSliderTapGesture({
+    testID,
+    mainAxisHitSlop: mainAxisHitSlop,
+    gestureActiveRef,
+    value,
+    positionFromEvent,
+    handleValueChange,
   });
 
   const nativeGesture = useNativeGesture();
@@ -190,13 +172,15 @@ export default function Slider({
           isVertical
             ? {
                 ...styles.verticalContainer,
-                width: trackHeight * 2,
-                paddingHorizontal: trackHeight,
+                width: (trackHeight + hitSlop) * 2,
+                paddingHorizontal: trackHeight + hitSlop,
+                marginHorizontal: -hitSlop,
               }
             : {
                 ...styles.horizontalContainer,
-                height: trackHeight * 2,
-                paddingVertical: trackHeight,
+                height: (trackHeight + hitSlop) * 2,
+                paddingVertical: trackHeight + hitSlop,
+                marginVertical: -hitSlop,
               }
         }
         onLayout={measure}
