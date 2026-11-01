@@ -230,6 +230,19 @@ describe('Slider', () => {
       await flushPromises();
 
       expect(value.value).toBe(60);
+    });
+
+    it('reports snapped values to onValueUpdate', async () => {
+      const onValueUpdate = jest.fn();
+      await renderSlider({ step: 25, onValueUpdate });
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 180 }]);
+      await flushPromises();
+
+      expect(onValueUpdate.mock.calls).toEqual([[25], [50], [100]]);
+    });
+  });
+
   describe('onValueUpdate', () => {
     it('reports each clamped value during a pan', async () => {
       const onValueUpdate = jest.fn();
