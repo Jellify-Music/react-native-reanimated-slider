@@ -16,6 +16,7 @@ const MAX_VALUE = 100;
 interface RenderSliderOptions {
   orientation?: SliderOrientation;
   onValueChange?: jest.Mock;
+  onValueUpdate?: jest.Mock;
   gestureActiveRef?: RefObject<boolean>;
   hitSlop?: number;
 }
@@ -23,6 +24,7 @@ interface RenderSliderOptions {
 async function renderSlider({
   orientation = 'horizontal',
   onValueChange = jest.fn(async () => {}),
+  onValueUpdate,
   gestureActiveRef,
   hitSlop,
 }: RenderSliderOptions = {}) {
@@ -34,6 +36,7 @@ async function renderSlider({
       orientation={orientation}
       value={value}
       onValueChange={onValueChange}
+      onValueUpdate={onValueUpdate}
       gestureActiveRef={gestureActiveRef}
       hitSlop={hitSlop}
       maxValue={MAX_VALUE}
@@ -181,6 +184,30 @@ describe('Slider', () => {
       expect(value.value).toBe(90);
       expect(onValueChange).toHaveBeenCalledTimes(1);
       expect(onValueChange).toHaveBeenCalledWith(90);
+    });
+  });
+
+  describe('onValueUpdate', () => {
+    it('reports each clamped value during a pan', async () => {
+      const onValueUpdate = jest.fn();
+      const onValueChange = jest.fn(async () => {});
+      await renderSlider({ onValueChange, onValueUpdate });
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 500 }]);
+      await flushPromises();
+
+      expect(onValueUpdate.mock.calls).toEqual([[30], [60], [MAX_VALUE]]);
+      expect(onValueChange).toHaveBeenCalledTimes(1);
+    });
+
+    it('is not called for a tap', async () => {
+      const onValueUpdate = jest.fn();
+      await renderSlider({ onValueUpdate });
+
+      tap({ x: 100 });
+      await flushPromises();
+
+      expect(onValueUpdate).not.toHaveBeenCalled();
     });
   });
 

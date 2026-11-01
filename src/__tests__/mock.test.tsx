@@ -73,4 +73,26 @@ describe('mock', () => {
 
     expect(onValueChange).toHaveBeenCalledWith(42);
   });
+
+  it('forwards valueUpdate events to onValueUpdate', async () => {
+    const onValueUpdate = jest.fn();
+
+    await render(
+      <MockSlider
+        testID="slider"
+        value={makeMutable(0)}
+        maxValue={100}
+        onValueChange={() => {}}
+        onValueUpdate={onValueUpdate}
+        thumbWidth={10}
+        trackHeight={4}
+        backgroundColor="#ccc"
+        color="#000"
+      />
+    );
+
+    await fireEvent(screen.getByTestId('slider'), 'valueUpdate', 42);
+
+    expect(onValueUpdate).toHaveBeenCalledWith(42);
+  });
 });

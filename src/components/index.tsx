@@ -27,6 +27,7 @@ import { useRef } from 'react';
 
 export default function Slider({
   onValueChange,
+  onValueUpdate,
   value: valueProp,
   thumbWidth,
   trackHeight,
@@ -84,6 +85,7 @@ export default function Slider({
     value,
     positionFromEvent,
     handleValueChange,
+    onValueUpdate,
   });
 
   const tapGesture = useSliderTapGesture({
