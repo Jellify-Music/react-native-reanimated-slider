@@ -60,6 +60,24 @@ function MyComponent() {
 }
 ```
 
+### Number Values
+
+`value` also accepts a plain `number`, for when you don't need a shared value. The slider follows the number as it changes, except while the user is dragging it:
+
+```tsx
+const [volume, setVolume] = useState(0.5);
+
+<Slider
+  value={volume}
+  onValueChange={setVolume}
+  maxValue={1}
+  thumbWidth={24}
+  trackHeight={8}
+  backgroundColor="#e0e0e0"
+  color="#6200ee"
+/>;
+```
+
 ### Vertical Orientation
 
 Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill from bottom to top and stretch to the height of their parent, so give the parent a height:
@@ -81,20 +99,20 @@ Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill 
 
 ## Props
 
-| Prop               | Type                         | Required | Description                                                                                                                                   |
-| ------------------ | ---------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value`            | `SharedValue<number>`        | ✓        | A Reanimated shared value that controls the slider position                                                                                   |
-| `onValueChange`    | `(value: number) => void`    | ✓        | Callback fired when the user releases the slider                                                                                              |
-| `maxValue`         | `number`                     | ✓        | The maximum value of the slider                                                                                                               |
-| `thumbWidth`       | `number`                     | ✓        | The width and height of the thumb (circular)                                                                                                  |
-| `trackHeight`      | `number`                     | ✓        | The thickness of the track (its width when vertical)                                                                                          |
-| `backgroundColor`  | `string`                     | ✓        | The color of the background track                                                                                                             |
-| `color`            | `string`                     | ✓        | The color of the progress track and thumb                                                                                                     |
-| `thumbShadowColor` | `string`                     |          | The shadow color of the thumb                                                                                                                 |
-| `gestureActiveRef` | `RefObject<boolean>`         |          | A `ref` indicating whether the slider is being used                                                                                           |
-| `hitSlop`          | `number`                     |          | Extra touchable distance around the track. Defaults to `20`. Laid out as padding with an equal negative margin, so it doesn't affect layout   |
-| `orientation`      | `'horizontal' \| 'vertical'` |          | The direction of the slider. Defaults to `'horizontal'`. Vertical sliders fill from bottom to top                                             |
-| `testID`           | `string`                     |          | A test ID for the slider container. Its gestures get `${testID}-pan` and `${testID}-tap`, for use with Gesture Handler's `getByGestureTestId` |
+| Prop               | Type                            | Required | Description                                                                                                                                   |
+| ------------------ | ------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `value`            | `SharedValue<number> \| number` | ✓        | A Reanimated shared value or a number that controls the slider position                                                                       |
+| `onValueChange`    | `(value: number) => void`       | ✓        | Callback fired when the user releases the slider                                                                                              |
+| `maxValue`         | `number`                        | ✓        | The maximum value of the slider                                                                                                               |
+| `thumbWidth`       | `number`                        | ✓        | The width and height of the thumb (circular)                                                                                                  |
+| `trackHeight`      | `number`                        | ✓        | The thickness of the track (its width when vertical)                                                                                          |
+| `backgroundColor`  | `string`                        | ✓        | The color of the background track                                                                                                             |
+| `color`            | `string`                        | ✓        | The color of the progress track and thumb                                                                                                     |
+| `thumbShadowColor` | `string`                        |          | The shadow color of the thumb                                                                                                                 |
+| `gestureActiveRef` | `RefObject<boolean>`            |          | A `ref` indicating whether the slider is being used                                                                                           |
+| `hitSlop`          | `number`                        |          | Extra touchable distance around the track. Defaults to `20`. Laid out as padding with an equal negative margin, so it doesn't affect layout   |
+| `orientation`      | `'horizontal' \| 'vertical'`    |          | The direction of the slider. Defaults to `'horizontal'`. Vertical sliders fill from bottom to top                                             |
+| `testID`           | `string`                        |          | A test ID for the slider container. Its gestures get `${testID}-pan` and `${testID}-tap`, for use with Gesture Handler's `getByGestureTestId` |
 
 ## Example Project
 
