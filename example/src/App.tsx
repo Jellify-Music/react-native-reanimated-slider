@@ -9,9 +9,11 @@ export default function App() {
 
   const value = useSharedValue(0);
   const verticalValue = useSharedValue(0);
+  const steppedValue = useSharedValue(0);
 
   const [state, setState] = useState('0.00');
   const [verticalState, setVerticalState] = useState('0.00');
+  const [steppedState, setSteppedState] = useState('0');
 
   const onValueChange = async (val: number) => {
     console.log(val);
@@ -21,6 +23,11 @@ export default function App() {
   const onVerticalValueChange = async (val: number) => {
     console.log(val);
     setVerticalState(val.toFixed(2));
+  };
+
+  const onSteppedValueChange = async (val: number) => {
+    console.log(val);
+    setSteppedState(val.toString());
   };
 
   return (
@@ -33,6 +40,23 @@ export default function App() {
         <Slider
           value={value}
           onValueChange={onValueChange}
+          gestureActiveRef={gestureActiveRef}
+          maxValue={100}
+          thumbWidth={10}
+          trackHeight={5}
+          backgroundColor="#ccc"
+          color="#bb00ffe0"
+          thumbShadowColor="#000"
+        />
+
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>Stepped Value: {steppedState}</Text>
+        </View>
+
+        <Slider
+          step={10}
+          value={steppedValue}
+          onValueChange={onSteppedValueChange}
           gestureActiveRef={gestureActiveRef}
           maxValue={100}
           thumbWidth={10}

@@ -14,6 +14,10 @@ export interface SliderProps {
   onValueUpdate?: SliderValueUpdate;
   maxValue: number;
   /**
+   * Snaps the slider to multiples of this interval while it's dragged or tapped
+   */
+  step?: number;
+  /**
    * The slider's value, as either a Reanimated shared value or a plain number.
    * A number is synced to the slider whenever it changes, except mid-gesture.
    */

@@ -19,6 +19,7 @@ interface RenderSliderOptions {
   onValueUpdate?: jest.Mock;
   gestureActiveRef?: RefObject<boolean>;
   hitSlop?: number;
+  step?: number;
 }
 
 async function renderSlider({
@@ -27,6 +28,7 @@ async function renderSlider({
   onValueUpdate,
   gestureActiveRef,
   hitSlop,
+  step,
 }: RenderSliderOptions = {}) {
   const value: SharedValue<number> = makeMutable(0);
 
@@ -39,6 +41,7 @@ async function renderSlider({
       onValueUpdate={onValueUpdate}
       gestureActiveRef={gestureActiveRef}
       hitSlop={hitSlop}
+      step={step}
       maxValue={MAX_VALUE}
       thumbWidth={10}
       trackHeight={4}
@@ -184,6 +187,59 @@ describe('Slider', () => {
       expect(value.value).toBe(90);
       expect(onValueChange).toHaveBeenCalledTimes(1);
       expect(onValueChange).toHaveBeenCalledWith(90);
+    });
+  });
+
+  describe('step', () => {
+    it.each([
+      [40, 20],
+      [50, 30],
+      [130, 70],
+      [195, 100],
+    ])('snaps a tap at x=%d to %d', async (x, expected) => {
+      const { value, onValueChange } = await renderSlider({ step: 10 });
+
+      tap({ x, y: 4 });
+      await flushPromises();
+
+      expect(value.value).toBe(expected);
+      expect(onValueChange).toHaveBeenCalledWith(expected);
+    });
+
+    it('ratchets through steps while panning', async () => {
+      const onValueChange = jest.fn(async () => {});
+      const { value } = await renderSlider({ step: 25, onValueChange });
+      const observed: number[] = [];
+      value.addListener(1, (position) => observed.push(position));
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 180 }]);
+      await flushPromises();
+
+      expect(observed).toEqual([25, 50, 100]);
+      expect(onValueChange).toHaveBeenCalledTimes(1);
+      expect(onValueChange).toHaveBeenCalledWith(100);
+    });
+
+    it('snaps vertical taps', async () => {
+      const { value } = await renderSlider({
+        orientation: 'vertical',
+        step: 20,
+      });
+
+      tap({ x: 4, y: 90 });
+      await flushPromises();
+
+      expect(value.value).toBe(60);
+    });
+
+    it('reports snapped values to onValueUpdate', async () => {
+      const onValueUpdate = jest.fn();
+      await renderSlider({ step: 25, onValueUpdate });
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 180 }]);
+      await flushPromises();
+
+      expect(onValueUpdate.mock.calls).toEqual([[25], [50], [100]]);
     });
   });
 

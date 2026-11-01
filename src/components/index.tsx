@@ -17,6 +17,7 @@ import {
   clampValue,
   sliderPositionFromX,
   sliderPositionFromY,
+  snapToStep,
 } from '../utils/slider';
 import type { HitSlop } from '../types';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
@@ -35,6 +36,7 @@ export default function Slider({
   color,
   thumbShadowColor,
   maxValue,
+  step,
   gestureActiveRef,
   hitSlop = HIT_SLOP,
   orientation = SliderOrientations.Horizontal,
@@ -52,9 +54,13 @@ export default function Slider({
   const sliderLength = useSharedValue(0);
 
   const positionFromEvent = ({ x, y }: { x: number; y: number }) =>
-    isVertical
-      ? sliderPositionFromY(y, sliderLength.value, maxValue)
-      : sliderPositionFromX(x, sliderLength.value, maxValue);
+    snapToStep(
+      isVertical
+        ? sliderPositionFromY(y, sliderLength.value, maxValue)
+        : sliderPositionFromX(x, sliderLength.value, maxValue),
+      step,
+      maxValue
+    );
 
   /**
    * Main axis hit slop for the slider gesture.

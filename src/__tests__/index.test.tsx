@@ -2,6 +2,7 @@ import {
   clampValue,
   sliderPositionFromX,
   sliderPositionFromY,
+  snapToStep,
 } from '../utils/slider';
 
 describe('slider utils', () => {
@@ -60,6 +61,30 @@ describe('slider utils', () => {
 
     it('clamps to 0 when y is below the slider', () => {
       expect(sliderPositionFromY(150, 100, 80)).toBe(0);
+    });
+  });
+
+  describe('snapToStep', () => {
+    it('returns the position unchanged without a step', () => {
+      expect(snapToStep(42.5, undefined, 100)).toBe(42.5);
+    });
+
+    it('returns the position unchanged for a non-positive step', () => {
+      expect(snapToStep(42.5, 0, 100)).toBe(42.5);
+      expect(snapToStep(42.5, -5, 100)).toBe(42.5);
+    });
+
+    it('rounds to the nearest step', () => {
+      expect(snapToStep(42, 5, 100)).toBe(40);
+      expect(snapToStep(43, 5, 100)).toBe(45);
+    });
+
+    it('rounds off floating point error from fractional steps', () => {
+      expect(snapToStep(0.31, 0.1, 1)).toBe(0.3);
+    });
+
+    it('clamps to maxValue when it is not a multiple of the step', () => {
+      expect(snapToStep(98, 10, 95)).toBe(95);
     });
   });
 });
