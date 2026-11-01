@@ -277,6 +277,36 @@ describe('Slider', () => {
     });
   });
 
+  describe('number value', () => {
+    it('reports gestures through onValueChange', async () => {
+      const onValueChange = jest.fn(async () => {});
+
+      await render(
+        <Slider
+          testID={TEST_ID}
+          value={10}
+          onValueChange={onValueChange}
+          maxValue={MAX_VALUE}
+          thumbWidth={10}
+          trackHeight={4}
+          backgroundColor="#ccc"
+          color="#000"
+        />,
+        { wrapper: GestureHandlerRootView }
+      );
+      await fireEvent(screen.getByTestId(TEST_ID), 'layout', {
+        nativeEvent: {
+          layout: { x: 0, y: 0, width: SLIDER_LENGTH, height: 8 },
+        },
+      });
+
+      tap({ x: 100, y: 4 });
+      await flushPromises();
+
+      expect(onValueChange).toHaveBeenCalledWith(50);
+    });
+  });
+
   describe('cancelled tap', () => {
     it('does not call onValueChange', async () => {
       const { onValueChange } = await renderSlider();

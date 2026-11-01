@@ -32,6 +32,27 @@ describe('mock', () => {
     });
   });
 
+  it('exposes a number value', async () => {
+    await render(
+      <MockSlider
+        testID="slider"
+        value={25}
+        maxValue={100}
+        onValueChange={() => {}}
+        thumbWidth={10}
+        trackHeight={4}
+        backgroundColor="#ccc"
+        color="#000"
+      />
+    );
+
+    expect(screen.getByTestId('slider')).toHaveProp('accessibilityValue', {
+      min: 0,
+      max: 100,
+      now: 25,
+    });
+  });
+
   it('forwards valueChange events to onValueChange', async () => {
     const onValueChange = jest.fn();
 
