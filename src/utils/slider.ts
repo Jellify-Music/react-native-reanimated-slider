@@ -58,3 +58,27 @@ export function sliderPositionFromY(
 export function clampValue(position: number, maxValue: number): number {
   return clamp(position, 0, maxValue);
 }
+
+/**
+ * Snaps a position to the nearest multiple of `step`, clamped between 0 and
+ * the maximum value. Returns the position unchanged when `step` isn't positive.
+ *
+ * @param position The current slider position
+ * @param step The interval between selectable values
+ * @param maxValue The maximum value of the slider
+ * @returns The snapped slider value
+ */
+export function snapToStep(
+  position: number,
+  step: number | undefined,
+  maxValue: number
+): number {
+  if (!step || step <= 0) {
+    return position;
+  }
+
+  // Round off floating point error from fractional steps, e.g. 3 * 0.1
+  const snapped = parseFloat((Math.round(position / step) * step).toFixed(10));
+
+  return clampValue(snapped, maxValue);
+}

@@ -14,6 +14,7 @@ We built this slider for [Jellify](https://github.com/Jellify-Music/App) to have
 - Powered by Reanimated for 60fps animations
 - Fully customizable colors and shadows
 - Horizontal and vertical orientations
+- Step intervals that snap the slider to fixed values
 - Works on iOS and Android
 
 ## Installation
@@ -79,6 +80,25 @@ Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill 
 </View>
 ```
 
+### Step Intervals
+
+Set `step` to snap the slider to multiples of an interval. The thumb ratchets between steps while dragging, and `onValueChange` only receives snapped values:
+
+```tsx
+<Slider
+  step={10}
+  value={rating}
+  onValueChange={onRatingChange}
+  maxValue={100}
+  thumbWidth={24}
+  trackHeight={8}
+  backgroundColor="#e0e0e0"
+  color="#6200ee"
+/>
+```
+
+If `maxValue` isn't a multiple of `step`, the slider can still reach `maxValue` at the end of the track.
+
 ## Props
 
 | Prop               | Type                         | Required | Description                                                                                                                                   |
@@ -86,6 +106,7 @@ Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill 
 | `value`            | `SharedValue<number>`        | ✓        | A Reanimated shared value that controls the slider position                                                                                   |
 | `onValueChange`    | `(value: number) => void`    | ✓        | Callback fired when the user releases the slider                                                                                              |
 | `maxValue`         | `number`                     | ✓        | The maximum value of the slider                                                                                                               |
+| `step`             | `number`                     |          | Snaps the slider to multiples of this interval. Disabled by default                                                                           |
 | `thumbWidth`       | `number`                     | ✓        | The width and height of the thumb (circular)                                                                                                  |
 | `trackHeight`      | `number`                     | ✓        | The thickness of the track (its width when vertical)                                                                                          |
 | `backgroundColor`  | `string`                     | ✓        | The color of the background track                                                                                                             |

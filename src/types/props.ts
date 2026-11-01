@@ -9,6 +9,10 @@ import type { SliderValueChange } from './events';
 export interface SliderProps {
   onValueChange: SliderValueChange;
   maxValue: number;
+  /**
+   * Snaps the slider to multiples of this interval while it's dragged or tapped
+   */
+  step?: number;
   value: SharedValue<number>;
   thumbWidth: number;
   thumbShadowColor?: string;
