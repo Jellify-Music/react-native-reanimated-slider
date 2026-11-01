@@ -6,7 +6,6 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
-  type SharedValue,
 } from 'react-native-reanimated';
 import {
   GestureDetector,
@@ -19,25 +18,10 @@ import {
   sliderPositionFromX,
   sliderPositionFromY,
 } from '../utils/slider';
-import type { RefObject } from 'react';
-import type { HitSlop, SliderOrientation } from '../types';
+import type { HitSlop } from '../types';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSliderTapGesture } from '../hooks/tap';
-
-interface SliderProps {
-  onValueChange: (value: number) => Promise<void>;
-  maxValue: number;
-  value: SharedValue<number>;
-  thumbWidth: number;
-  thumbShadowColor?: string;
-  trackHeight: number;
-  backgroundColor: string;
-  color: string;
-  gestureActiveRef?: RefObject<boolean>;
-  hitSlop?: number;
-  orientation?: SliderOrientation;
-  testID?: string;
-}
+import type { SliderProps } from '../types/props';
 
 export default function Slider({
   onValueChange,

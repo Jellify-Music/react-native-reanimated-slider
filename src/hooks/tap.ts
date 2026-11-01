@@ -1,5 +1,5 @@
 import { useTapGesture } from 'react-native-gesture-handler';
-import type { SliderGestureProps } from '../types/gestures';
+import type { SliderGestureParams } from '../types/gestures';
 
 export const useSliderTapGesture = ({
   testID,
@@ -8,7 +8,7 @@ export const useSliderTapGesture = ({
   value,
   positionFromEvent,
   handleValueChange,
-}: SliderGestureProps) =>
+}: SliderGestureParams) =>
   useTapGesture({
     runOnJS: true,
     testID: testID && `${testID}-tap`,

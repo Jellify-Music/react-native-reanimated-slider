@@ -236,6 +236,47 @@ describe('Slider', () => {
     });
   });
 
+  describe('synchronous onValueChange', () => {
+    it('reports the value and resets the ref', async () => {
+      jest.useFakeTimers();
+      const gestureActiveRef = { current: false };
+      const onValueChange = jest.fn((_value: number) => {});
+
+      await renderSlider({ gestureActiveRef, onValueChange });
+
+      tap({ x: 100 });
+      await jest.advanceTimersByTimeAsync(100);
+
+      expect(onValueChange).toHaveBeenCalledWith(50);
+      expect(gestureActiveRef.current).toBe(false);
+    });
+
+    it('logs a thrown error instead of throwing and still resets the ref', async () => {
+      jest.useFakeTimers();
+      const consoleError = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const error = new Error('Seek failed');
+      const gestureActiveRef = { current: false };
+
+      await renderSlider({
+        gestureActiveRef,
+        onValueChange: jest.fn(() => {
+          throw error;
+        }),
+      });
+
+      tap({ x: 100 });
+      await jest.advanceTimersByTimeAsync(100);
+
+      expect(consoleError).toHaveBeenCalledWith(
+        'Error updating Reanimated Slider value:',
+        error
+      );
+      expect(gestureActiveRef.current).toBe(false);
+    });
+  });
+
   describe('cancelled tap', () => {
     it('does not call onValueChange', async () => {
       const { onValueChange } = await renderSlider();

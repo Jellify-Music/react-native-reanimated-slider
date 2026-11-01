@@ -1,0 +1,6 @@
+/**
+ * Callback type for when the slider value changes.
+ * @param value The new value of the slider.
+ * @returns A promise that resolves when the value change is handled, or void.
+ */
+export type SliderValueChange = (value: number) => Promise<void> | void;

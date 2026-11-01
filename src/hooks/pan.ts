@@ -1,5 +1,5 @@
 import { usePanGesture } from 'react-native-gesture-handler';
-import type { SliderGestureProps } from '../types/gestures';
+import type { SliderGestureParams } from '../types/gestures';
 
 const useSliderPanGesture = ({
   testID,
@@ -8,7 +8,7 @@ const useSliderPanGesture = ({
   value,
   positionFromEvent,
   handleValueChange,
-}: SliderGestureProps) =>
+}: SliderGestureParams) =>
   usePanGesture({
     runOnJS: true,
     testID: testID && `${testID}-pan`,
