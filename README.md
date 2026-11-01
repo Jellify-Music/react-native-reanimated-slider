@@ -85,6 +85,7 @@ Set `orientation="vertical"` to render a vertical slider. Vertical sliders fill 
 | ------------------ | ---------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `value`            | `SharedValue<number>`        | ✓        | A Reanimated shared value that controls the slider position                                                                                   |
 | `onValueChange`    | `(value: number) => void`    | ✓        | Callback fired when the user releases the slider                                                                                              |
+| `onValueUpdate`    | `(value: number) => void`    |          | Callback fired with the value on every update while the user drags the slider                                                                 |
 | `maxValue`         | `number`                     | ✓        | The maximum value of the slider                                                                                                               |
 | `thumbWidth`       | `number`                     | ✓        | The width and height of the thumb (circular)                                                                                                  |
 | `trackHeight`      | `number`                     | ✓        | The thickness of the track (its width when vertical)                                                                                          |
@@ -147,10 +148,11 @@ jest.mock('@jellify-music/react-native-reanimated-slider', () =>
 );
 ```
 
-The mock is CommonJS, so you don't need to add this package to `transformIgnorePatterns`. It passes `testID` through and reports `maxValue` and the value at render time via `accessibilityValue`. It also forwards `onValueChange`, so tests can trigger a change:
+The mock is CommonJS, so you don't need to add this package to `transformIgnorePatterns`. It passes `testID` through and reports `maxValue` and the value at render time via `accessibilityValue`. It also forwards `onValueChange` and `onValueUpdate`, so tests can trigger them:
 
 ```js
 fireEvent(screen.getByTestId('volume-slider'), 'valueChange', 42);
+fireEvent(screen.getByTestId('volume-slider'), 'valueUpdate', 42);
 ```
 
 ## Contributing

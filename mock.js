@@ -15,15 +15,17 @@ const SliderOrientations = {
 };
 
 /**
- * Renders a plain `View` in place of the slider. `onValueChange` is passed
- * through, so tests can trigger it with `fireEvent(slider, 'valueChange', 42)`.
+ * Renders a plain `View` in place of the slider. `onValueChange` and
+ * `onValueUpdate` are passed through, so tests can trigger them with
+ * `fireEvent(slider, 'valueChange', 42)` or `fireEvent(slider, 'valueUpdate', 42)`.
  */
-function Slider({ testID, value, maxValue, onValueChange }) {
+function Slider({ testID, value, maxValue, onValueChange, onValueUpdate }) {
   return createElement(View, {
     testID,
     accessibilityRole: 'adjustable',
     accessibilityValue: { min: 0, max: maxValue, now: value?.value },
     onValueChange,
+    onValueUpdate,
   });
 }
 

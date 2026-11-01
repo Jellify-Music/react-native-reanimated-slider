@@ -25,6 +25,7 @@ import type { SliderProps } from '../types/props';
 
 export default function Slider({
   onValueChange,
+  onValueUpdate,
   value,
   thumbWidth,
   trackHeight,
@@ -78,6 +79,7 @@ export default function Slider({
     value,
     positionFromEvent,
     handleValueChange,
+    onValueUpdate,
   });
 
   const tapGesture = useSliderTapGesture({
