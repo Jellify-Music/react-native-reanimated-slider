@@ -8,6 +8,7 @@ const useSliderPanGesture = ({
   value,
   positionFromEvent,
   handleValueChange,
+  onValueUpdate,
 }: SliderGestureParams) =>
   usePanGesture({
     runOnJS: true,
@@ -21,7 +22,11 @@ const useSliderPanGesture = ({
       value.set(positionFromEvent(event));
     },
     onUpdate: (event) => {
-      value.set(positionFromEvent(event));
+      const position = positionFromEvent(event);
+
+      value.set(position);
+
+      onValueUpdate?.(position);
     },
     onDeactivate: async (event) => {
       const position = positionFromEvent(event);

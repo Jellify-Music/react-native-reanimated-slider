@@ -4,3 +4,9 @@
  * @returns A promise that resolves when the value change is handled, or void.
  */
 export type SliderValueChange = (value: number) => Promise<void> | void;
+
+/**
+ * Callback type for when the slider value updates during a pan gesture.
+ * @param value The current value of the slider.
+ */
+export type SliderValueUpdate = (value: number) => void;

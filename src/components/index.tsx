@@ -22,11 +22,14 @@ import {
 import type { HitSlop } from '../types';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSliderTapGesture } from '../hooks/tap';
+import useSliderValue from '../hooks/value';
 import type { SliderProps } from '../types/props';
+import { useRef } from 'react';
 
 export default function Slider({
   onValueChange,
-  value,
+  onValueUpdate,
+  value: valueProp,
   thumbWidth,
   trackHeight,
   backgroundColor,
@@ -40,6 +43,12 @@ export default function Slider({
   testID,
 }: SliderProps) {
   const isVertical = orientation === SliderOrientations.Vertical;
+
+  // Track gestures internally when the consumer doesn't provide a ref
+  const internalGestureActiveRef = useRef(false);
+  const activeGestureRef = gestureActiveRef ?? internalGestureActiveRef;
+
+  const value = useSliderValue(valueProp, activeGestureRef);
 
   // Width of a horizontal slider, or height of a vertical one
   const sliderLength = useSharedValue(0);
@@ -70,9 +79,7 @@ export default function Slider({
       console.error('Error updating Reanimated Slider value:', error);
     } finally {
       setTimeout(() => {
-        if (gestureActiveRef) {
-          gestureActiveRef.current = false;
-        }
+        activeGestureRef.current = false;
       }, 100);
     }
   };
@@ -80,16 +87,17 @@ export default function Slider({
   const panGesture = useSliderPanGesture({
     testID,
     mainAxisHitSlop: mainAxisHitSlop,
-    gestureActiveRef,
+    gestureActiveRef: activeGestureRef,
     value,
     positionFromEvent,
     handleValueChange,
+    onValueUpdate,
   });
 
   const tapGesture = useSliderTapGesture({
     testID,
     mainAxisHitSlop: mainAxisHitSlop,
-    gestureActiveRef,
+    gestureActiveRef: activeGestureRef,
     value,
     positionFromEvent,
     handleValueChange,

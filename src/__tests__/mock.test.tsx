@@ -32,6 +32,27 @@ describe('mock', () => {
     });
   });
 
+  it('exposes a number value', async () => {
+    await render(
+      <MockSlider
+        testID="slider"
+        value={25}
+        maxValue={100}
+        onValueChange={() => {}}
+        thumbWidth={10}
+        trackHeight={4}
+        backgroundColor="#ccc"
+        color="#000"
+      />
+    );
+
+    expect(screen.getByTestId('slider')).toHaveProp('accessibilityValue', {
+      min: 0,
+      max: 100,
+      now: 25,
+    });
+  });
+
   it('forwards valueChange events to onValueChange', async () => {
     const onValueChange = jest.fn();
 
@@ -51,5 +72,27 @@ describe('mock', () => {
     await fireEvent(screen.getByTestId('slider'), 'valueChange', 42);
 
     expect(onValueChange).toHaveBeenCalledWith(42);
+  });
+
+  it('forwards valueUpdate events to onValueUpdate', async () => {
+    const onValueUpdate = jest.fn();
+
+    await render(
+      <MockSlider
+        testID="slider"
+        value={makeMutable(0)}
+        maxValue={100}
+        onValueChange={() => {}}
+        onValueUpdate={onValueUpdate}
+        thumbWidth={10}
+        trackHeight={4}
+        backgroundColor="#ccc"
+        color="#000"
+      />
+    );
+
+    await fireEvent(screen.getByTestId('slider'), 'valueUpdate', 42);
+
+    expect(onValueUpdate).toHaveBeenCalledWith(42);
   });
 });

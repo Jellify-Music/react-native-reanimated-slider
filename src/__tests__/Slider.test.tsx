@@ -16,6 +16,7 @@ const MAX_VALUE = 100;
 interface RenderSliderOptions {
   orientation?: SliderOrientation;
   onValueChange?: jest.Mock;
+  onValueUpdate?: jest.Mock;
   gestureActiveRef?: RefObject<boolean>;
   hitSlop?: number;
   step?: number;
@@ -24,6 +25,7 @@ interface RenderSliderOptions {
 async function renderSlider({
   orientation = 'horizontal',
   onValueChange = jest.fn(async () => {}),
+  onValueUpdate,
   gestureActiveRef,
   hitSlop,
   step,
@@ -36,6 +38,7 @@ async function renderSlider({
       orientation={orientation}
       value={value}
       onValueChange={onValueChange}
+      onValueUpdate={onValueUpdate}
       gestureActiveRef={gestureActiveRef}
       hitSlop={hitSlop}
       step={step}
@@ -227,6 +230,27 @@ describe('Slider', () => {
       await flushPromises();
 
       expect(value.value).toBe(60);
+  describe('onValueUpdate', () => {
+    it('reports each clamped value during a pan', async () => {
+      const onValueUpdate = jest.fn();
+      const onValueChange = jest.fn(async () => {});
+      await renderSlider({ onValueChange, onValueUpdate });
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 500 }]);
+      await flushPromises();
+
+      expect(onValueUpdate.mock.calls).toEqual([[30], [60], [MAX_VALUE]]);
+      expect(onValueChange).toHaveBeenCalledTimes(1);
+    });
+
+    it('is not called for a tap', async () => {
+      const onValueUpdate = jest.fn();
+      await renderSlider({ onValueUpdate });
+
+      tap({ x: 100 });
+      await flushPromises();
+
+      expect(onValueUpdate).not.toHaveBeenCalled();
     });
   });
 
@@ -320,6 +344,36 @@ describe('Slider', () => {
         error
       );
       expect(gestureActiveRef.current).toBe(false);
+    });
+  });
+
+  describe('number value', () => {
+    it('reports gestures through onValueChange', async () => {
+      const onValueChange = jest.fn(async () => {});
+
+      await render(
+        <Slider
+          testID={TEST_ID}
+          value={10}
+          onValueChange={onValueChange}
+          maxValue={MAX_VALUE}
+          thumbWidth={10}
+          trackHeight={4}
+          backgroundColor="#ccc"
+          color="#000"
+        />,
+        { wrapper: GestureHandlerRootView }
+      );
+      await fireEvent(screen.getByTestId(TEST_ID), 'layout', {
+        nativeEvent: {
+          layout: { x: 0, y: 0, width: SLIDER_LENGTH, height: 8 },
+        },
+      });
+
+      tap({ x: 100, y: 4 });
+      await flushPromises();
+
+      expect(onValueChange).toHaveBeenCalledWith(50);
     });
   });
 
