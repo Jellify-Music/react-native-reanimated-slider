@@ -23,7 +23,11 @@ function Slider({ testID, value, maxValue, onValueChange, onValueUpdate }) {
   return createElement(View, {
     testID,
     accessibilityRole: 'adjustable',
-    accessibilityValue: { min: 0, max: maxValue, now: value?.value },
+    accessibilityValue: {
+      min: 0,
+      max: maxValue,
+      now: typeof value === 'number' ? value : value?.value,
+    },
     onValueChange,
     onValueUpdate,
   });

@@ -13,7 +13,11 @@ export interface SliderProps {
    */
   onValueUpdate?: SliderValueUpdate;
   maxValue: number;
-  value: SharedValue<number>;
+  /**
+   * The slider's value, as either a Reanimated shared value or a plain number.
+   * A number is synced to the slider whenever it changes, except mid-gesture.
+   */
+  value: SharedValue<number> | number;
   thumbWidth: number;
   thumbShadowColor?: string;
   trackHeight: number;
