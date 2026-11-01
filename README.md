@@ -137,6 +137,22 @@ bun run test --coverage
 
 Tests are automatically run on every pull request and push to main via CI.
 
+### Mocking in Jest
+
+The package ships a Jest mock that renders a plain `View` in place of the slider, so your tests don't need Gesture Handler or Reanimated to render it:
+
+```js
+jest.mock('@jellify-music/react-native-reanimated-slider', () =>
+  require('@jellify-music/react-native-reanimated-slider/mock')
+);
+```
+
+The mock is CommonJS, so you don't need to add this package to `transformIgnorePatterns`. It passes `testID` through and reports `maxValue` and the value at render time via `accessibilityValue`. It also forwards `onValueChange`, so tests can trigger a change:
+
+```js
+fireEvent(screen.getByTestId('volume-slider'), 'valueChange', 42);
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
