@@ -1,7 +1,11 @@
 import type { RefObject } from 'react';
 import type { SharedValue } from 'react-native-reanimated';
 import type { SliderOrientation } from '.';
-import type { SliderValueChange, SliderValueUpdate } from './events';
+import type {
+  SliderStepAnimation,
+  SliderValueChange,
+  SliderValueUpdate,
+} from './events';
 
 /**
  * Props
@@ -17,6 +21,17 @@ export interface SliderProps {
    * Snaps the slider to multiples of this interval while it's dragged or tapped
    */
   step?: number;
+  /**
+   * How far the thumb follows the finger between steps, from 0 (not at all)
+   * to 1 (all the way). Defaults to 0.3
+   */
+  stepResistance?: number;
+  /**
+   * Creates the animation that moves the thumb into a step once the finger
+   * passes the midpoint, e.g. `(toValue) => withTiming(toValue)`.
+   * Defaults to a spring
+   */
+  stepAnimation?: SliderStepAnimation;
   /**
    * The slider's value, as either a Reanimated shared value or a plain number.
    * A number is synced to the slider whenever it changes, except mid-gesture.

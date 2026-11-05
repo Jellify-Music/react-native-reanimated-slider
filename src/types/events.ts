@@ -10,3 +10,10 @@ export type SliderValueChange = (value: number) => Promise<void> | void;
  * @param value The current value of the slider.
  */
 export type SliderValueUpdate = (value: number) => void;
+
+/**
+ * Creates the animation that moves the slider's thumb into a step.
+ * @param toValue The value to animate to.
+ * @returns A Reanimated animation, e.g. `withSpring(toValue)`.
+ */
+export type SliderStepAnimation = (toValue: number) => number;

@@ -5,7 +5,7 @@ const useSliderPanGesture = ({
   testID,
   mainAxisHitSlop,
   gestureActiveRef,
-  value,
+  moveTo,
   positionFromEvent,
   handleValueChange,
   onValueUpdate,
@@ -19,19 +19,15 @@ const useSliderPanGesture = ({
         gestureActiveRef.current = true;
       }
 
-      value.set(positionFromEvent(event));
+      moveTo(positionFromEvent(event));
     },
     onUpdate: (event) => {
-      const position = positionFromEvent(event);
-
-      value.set(position);
+      const position = moveTo(positionFromEvent(event));
 
       onValueUpdate?.(position);
     },
     onDeactivate: async (event) => {
-      const position = positionFromEvent(event);
-
-      value.set(position);
+      const position = moveTo(positionFromEvent(event), true);
 
       await handleValueChange(position);
     },

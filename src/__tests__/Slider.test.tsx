@@ -20,6 +20,7 @@ interface RenderSliderOptions {
   gestureActiveRef?: RefObject<boolean>;
   hitSlop?: number;
   step?: number;
+  stepAnimation?: jest.Mock;
 }
 
 async function renderSlider({
@@ -29,6 +30,7 @@ async function renderSlider({
   gestureActiveRef,
   hitSlop,
   step,
+  stepAnimation,
 }: RenderSliderOptions = {}) {
   const value: SharedValue<number> = makeMutable(0);
 
@@ -42,6 +44,7 @@ async function renderSlider({
       gestureActiveRef={gestureActiveRef}
       hitSlop={hitSlop}
       step={step}
+      stepAnimation={stepAnimation}
       maxValue={MAX_VALUE}
       thumbWidth={10}
       trackHeight={4}
@@ -240,6 +243,27 @@ describe('Slider', () => {
       await flushPromises();
 
       expect(onValueUpdate.mock.calls).toEqual([[25], [50], [100]]);
+    });
+
+    it('animates into each new step and settles on release', async () => {
+      const stepAnimation = jest.fn((toValue: number) => toValue);
+      await renderSlider({ step: 25, stepAnimation });
+
+      pan([{ x: 20 }, { x: 60 }, { x: 120 }, { x: 180 }]);
+      await flushPromises();
+
+      // Three step changes, plus settling on release
+      expect(stepAnimation.mock.calls).toEqual([[0], [0], [0], [0]]);
+    });
+
+    it('does not animate without a step', async () => {
+      const stepAnimation = jest.fn((toValue: number) => toValue);
+      await renderSlider({ stepAnimation });
+
+      pan([{ x: 20 }, { x: 60 }]);
+      await flushPromises();
+
+      expect(stepAnimation).not.toHaveBeenCalled();
     });
   });
 

@@ -5,7 +5,7 @@ export const useSliderTapGesture = ({
   testID,
   mainAxisHitSlop,
   gestureActiveRef,
-  value,
+  moveTo,
   positionFromEvent,
   handleValueChange,
 }: SliderGestureParams) =>
@@ -18,14 +18,12 @@ export const useSliderTapGesture = ({
         gestureActiveRef.current = true;
       }
 
-      value.set(positionFromEvent(event));
+      moveTo(positionFromEvent(event));
     },
     onFinalize: async (event) => {
       if (event.canceled) return;
 
-      const position = positionFromEvent(event);
-
-      value.set(position);
+      const position = moveTo(positionFromEvent(event), true);
 
       await handleValueChange(position);
     },
