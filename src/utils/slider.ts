@@ -7,6 +7,8 @@
  * @returns The clamped value, guaranteed to be between min and max
  */
 export function clamp(value: number, min: number, max: number): number {
+  'worklet';
+
   return Math.min(Math.max(value, min), max);
 }
 
@@ -56,6 +58,8 @@ export function sliderPositionFromY(
  * @returns The clamped slider value
  */
 export function clampValue(position: number, maxValue: number): number {
+  'worklet';
+
   return clamp(position, 0, maxValue);
 }
 
