@@ -1,4 +1,4 @@
-import { HIT_SLOP } from '../configs';
+import { HIT_SLOP, STEP_RESISTANCE, STEP_SPRING_CONFIG } from '../configs';
 import useSliderPanGesture from '../hooks/pan';
 import { SliderOrientations } from '../enums';
 import Animated, {
@@ -6,6 +6,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
 } from 'react-native-reanimated';
 import {
   GestureDetector,
@@ -17,12 +18,12 @@ import {
   clampValue,
   sliderPositionFromX,
   sliderPositionFromY,
-  snapToStep,
 } from '../utils/slider';
 import type { HitSlop } from '../types';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSliderTapGesture } from '../hooks/tap';
 import useSliderValue from '../hooks/value';
+import useSliderStep from '../hooks/step';
 import type { SliderProps } from '../types/props';
 import { useRef } from 'react';
 
@@ -37,6 +38,8 @@ export default function Slider({
   thumbShadowColor,
   maxValue,
   step,
+  stepResistance = STEP_RESISTANCE,
+  stepAnimation = defaultStepAnimation,
   gestureActiveRef,
   hitSlop = HIT_SLOP,
   orientation = SliderOrientations.Horizontal,
@@ -50,17 +53,21 @@ export default function Slider({
 
   const value = useSliderValue(valueProp, activeGestureRef);
 
+  const { displayValue, moveTo } = useSliderStep({
+    value,
+    maxValue,
+    step,
+    stepResistance,
+    stepAnimation,
+  });
+
   // Width of a horizontal slider, or height of a vertical one
   const sliderLength = useSharedValue(0);
 
   const positionFromEvent = ({ x, y }: { x: number; y: number }) =>
-    snapToStep(
-      isVertical
-        ? sliderPositionFromY(y, sliderLength.value, maxValue)
-        : sliderPositionFromX(x, sliderLength.value, maxValue),
-      step,
-      maxValue
-    );
+    isVertical
+      ? sliderPositionFromY(y, sliderLength.value, maxValue)
+      : sliderPositionFromX(x, sliderLength.value, maxValue);
 
   /**
    * Main axis hit slop for the slider gesture.
@@ -88,7 +95,7 @@ export default function Slider({
     testID,
     mainAxisHitSlop: mainAxisHitSlop,
     gestureActiveRef: activeGestureRef,
-    value,
+    moveTo,
     positionFromEvent,
     handleValueChange,
     onValueUpdate,
@@ -98,7 +105,7 @@ export default function Slider({
     testID,
     mainAxisHitSlop: mainAxisHitSlop,
     gestureActiveRef: activeGestureRef,
-    value,
+    moveTo,
     positionFromEvent,
     handleValueChange,
   });
@@ -117,7 +124,7 @@ export default function Slider({
         ? [
             {
               translateY: interpolate(
-                value.value,
+                displayValue.value,
                 [0, maxValue],
                 [thumbRange, 0],
                 Extrapolation.CLAMP
@@ -127,7 +134,7 @@ export default function Slider({
         : [
             {
               translateX: interpolate(
-                value.value,
+                displayValue.value,
                 [0, maxValue],
                 [0, thumbRange],
                 Extrapolation.CLAMP
@@ -139,7 +146,7 @@ export default function Slider({
 
   const progressAnimatedStyle = useAnimatedStyle(() => {
     const progressLength = interpolate(
-      value.value,
+      displayValue.value,
       [0, maxValue],
       [0, sliderLength.value],
       Extrapolation.CLAMP
@@ -232,6 +239,11 @@ export default function Slider({
       </View>
     </GestureDetector>
   );
+}
+
+function defaultStepAnimation(toValue: number) {
+  'worklet';
+  return withSpring(toValue, STEP_SPRING_CONFIG);
 }
 
 const styles = StyleSheet.create({

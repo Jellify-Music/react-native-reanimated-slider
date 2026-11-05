@@ -2302,12 +2302,12 @@ SPEC CHECKSUMS:
   React-viewtransitionnativemodule: 8505b253586f792c6c722869a664889797ecae3e
   React-webperformancenativemodule: 67f32fde92ed7e8470ee1c669bdb7c2fcb760141
   ReactAppDependencyProvider: 782ee9546c9cd3b53b73f1e9e3dd728540085fc7
-  ReactCodegen: 9566ac8fdb0477801f32639b0e23bcb55f79a5e0
+  ReactCodegen: e3a579a3901cbeca12cc423396bbfd0165a3381b
   ReactCommon: 145a14b942b19fc2fe38927f261955ada56978aa
   ReactNativeDependencies: d3b7423ba1e52525e42085c8470109abde583d2e
   RNGestureHandler: b5512a093e6923dd1c31fbdd8e6186cd0ebb3541
-  RNReanimated: b0468bc8da0a8971761b1f922311648fe29dde7a
-  RNWorklets: 2b4a3838306800e7c493bdcd2020aead12c46eef
+  RNReanimated: a3cc5988d160807388d6e4a22c433031cb91cc9f
+  RNWorklets: f15988cbbb88532af0a68505ebf400ea2d17fa66
   SocketRocket: 37aec555668fb852ec12e3c0de59a86ca58f0871
   Yoga: d1c536142c5ff8ec8cd856ab2a7c227a1d875c8e
 

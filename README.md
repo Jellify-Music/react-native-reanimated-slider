@@ -117,6 +117,21 @@ Set `step` to snap the slider to multiples of an interval. The thumb ratchets be
 
 If `maxValue` isn't a multiple of `step`, the slider can still reach `maxValue` at the end of the track.
 
+Stepped sliders resist being dragged: between steps the thumb only follows the finger part of the way, then springs into the next step once the finger passes the midpoint. Tune how far it follows with `stepResistance`, or swap the spring for any Reanimated animation with `stepAnimation`:
+
+```tsx
+import { withTiming } from 'react-native-reanimated';
+
+<Slider
+  step={10}
+  stepResistance={0.5}
+  stepAnimation={(toValue) => withTiming(toValue, { duration: 120 })}
+  // ...
+/>;
+```
+
+Pass `stepResistance={0}` and `stepAnimation={(toValue) => toValue}` to ratchet between steps without springiness.
+
 ## Props
 
 | Prop               | Type                            | Required | Description                                                                                                                                   |
@@ -126,6 +141,8 @@ If `maxValue` isn't a multiple of `step`, the slider can still reach `maxValue` 
 | `onValueUpdate`    | `(value: number) => void`       |          | Callback fired with the value on every update while the user drags the slider                                                                 |
 | `maxValue`         | `number`                        | ✓        | The maximum value of the slider                                                                                                               |
 | `step`             | `number`                        |          | Snaps the slider to multiples of this interval. Disabled by default                                                                           |
+| `stepResistance`   | `number`                        |          | How far the thumb follows the finger between steps, from `0` to `1`. Defaults to `0.3`                                                        |
+| `stepAnimation`    | `(toValue: number) => number`   |          | Creates the Reanimated animation that moves the thumb into a step. Defaults to a spring                                                       |
 | `thumbWidth`       | `number`                        | ✓        | The width and height of the thumb (circular)                                                                                                  |
 | `trackHeight`      | `number`                        | ✓        | The thickness of the track (its width when vertical)                                                                                          |
 | `backgroundColor`  | `string`                        | ✓        | The color of the background track                                                                                                             |
