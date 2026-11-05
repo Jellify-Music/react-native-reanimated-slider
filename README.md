@@ -3,6 +3,7 @@
 A performant, customizable slider component for React Native, powered by React Native Gesture Handler and Reanimated.
 
 ![Jellify Demo - Player](./screenshots/player_smooth_slider.gif)
+
 ![Jellify Demo - Track Lookahead](./screenshots/springing_step_slider.gif)
 
 ## Intro
