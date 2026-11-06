@@ -5,14 +5,14 @@ A performant, customizable slider component for React Native, powered by React N
 <table>
   <tr>
     <td align="center" valign="middle" width="50%">
-      <img src="./screenshots/player_smooth_slider.gif" width="100%" alt="Jellify player screen with a smooth seek slider being dragged" />
+      <img src="./screenshots/player_smooth_slider.gif" width="100%" alt="Jellify player screen with a smooth, tappable seek slider being dragged" />
     </td>
     <td align="center" valign="middle" width="50%">
       <img src="./screenshots/springing_step_slider.gif" width="100%" alt="Jellify track lookahead setting with a stepped slider springing between values" />
     </td>
   </tr>
   <tr>
-    <td align="center"><em>Smooth slider in the Jellify player</em></td>
+    <td align="center"><em>Smooth, tappable slider in the Jellify player</em></td>
     <td align="center"><em>Stepped slider with springy resistance for track lookahead</em></td>
   </tr>
 </table>
